@@ -777,14 +777,17 @@
       .music-prompt { padding: 2rem 1.5rem; max-width: 92vw; }
       .music-prompt-title { font-size: 2.1rem; }
       .music-prompt-text { font-size: 0.98rem; }
-      .floating-player {
-        bottom: 1rem;
-        right: 1rem;
-        left: 1rem;
-        width: auto;
-        max-width: none;
+      .now-playing {
+        bottom: 1rem; right: 1rem;
+        padding: 0.45rem 1rem 0.45rem 0.45rem;
+        gap: 0.7rem;
       }
-      .floating-player-label { font-size: 1.05rem; }
+      .now-playing-icon { width: 40px; height: 40px; }
+      .vinyl { font-size: 1.1rem; }
+      .now-playing-title { font-size: 1.3rem; max-width: 150px; }
+      .now-playing-artist { font-size: 0.78rem; max-width: 150px; }
+      .now-playing-label { font-size: 0.5rem; }
+      .now-playing-close { font-size: 1.15rem; }
     }
 
     @media (max-width: 420px) {
@@ -821,64 +824,120 @@
       animation: promptFadeIn 0.8s ease both;
     }
 
-    .spotify-embed-wrap {
-      margin: 1.2rem 0 1.4rem;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 6px 18px rgba(200,146,63,0.18);
-    }
-    .spotify-embed-wrap iframe { display: block; width: 100%; }
-
-    /* Floating compact Spotify player */
-    .floating-player {
+    /* ─── Now Playing floating card ─── */
+    .now-playing {
       position: fixed;
-      bottom: 1.2rem; right: 1.2rem;
-      width: 320px;
-      max-width: calc(100vw - 2rem);
-      background: linear-gradient(160deg, rgba(255,255,255,0.96), rgba(253,237,241,0.96));
+      bottom: 1.5rem; right: 1.5rem;
+      background: linear-gradient(160deg, rgba(255,255,255,0.94), rgba(253,237,241,0.94));
       border: 1px solid var(--card-border);
-      border-radius: 18px;
+      border-radius: 60px;
+      padding: 0.55rem 1.2rem 0.55rem 0.55rem;
       backdrop-filter: blur(12px);
-      box-shadow: 0 10px 32px rgba(200,146,63,0.25);
+      box-shadow: 0 8px 28px rgba(200,146,63,0.25);
       display: none;
+      align-items: center;
+      gap: 0.85rem;
       z-index: 999;
-      overflow: hidden;
-      animation: floatIn 0.5s ease both;
+      max-width: calc(100vw - 3rem);
+      animation: nowPlayingIn 0.6s ease both;
     }
-    .floating-player.active { display: block; }
-    @keyframes floatIn {
+    .now-playing.active { display: flex; }
+    @keyframes nowPlayingIn {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .floating-player-header {
+
+    .now-playing-icon {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--yellow-deep));
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0.6rem 0.9rem 0.5rem;
-      border-bottom: 1px solid rgba(200,146,63,0.18);
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(200,146,63,0.32);
+      position: relative;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .floating-player-label {
+    .now-playing-icon:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 18px rgba(200,146,63,0.4);
+    }
+    .now-playing-icon::before {
+      content: '';
+      position: absolute;
+      width: 9px; height: 9px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+    .vinyl {
+      color: var(--ink);
+      font-size: 1.3rem;
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+    }
+    .vinyl.spinning {
+      animation: vinylSpin 4s linear infinite;
+    }
+    @keyframes vinylSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .now-playing-info {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      line-height: 1.2;
+    }
+    .now-playing-label {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.55rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 0.15rem;
+    }
+    .now-playing-title {
       font-family: 'Parisienne', cursive;
-      font-size: 1.2rem;
+      font-size: 1.55rem;
       color: var(--ink);
       line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
     }
-    .floating-player-close {
+    .now-playing-artist {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+      margin-top: 0.05rem;
+    }
+    .now-playing-close {
       background: transparent;
       border: none;
       color: var(--ink-muted);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       cursor: pointer;
-      padding: 0 0.3rem;
+      padding: 0 0.2rem;
       line-height: 1;
+      align-self: flex-start;
+      margin-top: 0.2rem;
       transition: color 0.2s;
     }
-    .floating-player-close:hover { color: var(--ink); }
-    .floating-player iframe {
-      display: block;
-      width: 100%;
-      border: none;
-    }
+    .now-playing-close:hover { color: var(--ink); }
     .music-prompt::before {
       content: '✦';
       position: absolute;
@@ -976,37 +1035,33 @@
     <p class="music-prompt-title">A Little Music?</p>
     <p class="music-prompt-sub">For the full experience</p>
     <p class="music-prompt-text">
-      We've made a little playlist just for you — songs that have made our hearts dance.
-      Press play below and wander through with us.
+      We've chosen a song that's especially meaningful to us — something that captures
+      the way our hearts feel when we're together. Press play and let it play softly
+      as you wander through.
     </p>
-    <div class="spotify-embed-wrap">
-      <iframe
-        id="spotify-iframe-prompt"
-        style="border-radius:14px"
-        src="https://open.spotify.com/embed/playlist/7uwLmtbM3Lm25Zk4a6vClE?utm_source=generator&theme=0"
-        width="100%" height="232" frameBorder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"></iframe>
-    </div>
     <div class="music-prompt-buttons">
-      <button class="music-btn music-btn--yes" onclick="enterSite()">Enter the celebration ✦</button>
+      <button class="music-btn music-btn--yes" onclick="startMusic()">Yes, play music ✦</button>
+      <button class="music-btn music-btn--no" onclick="dismissMusic()">No thanks</button>
     </div>
   </div>
 
-  <!-- ═══ Floating compact Spotify player ═══ -->
-  <div class="floating-player" id="floatingPlayer">
-    <div class="floating-player-header">
-      <span class="floating-player-label">♫ Our Playlist</span>
-      <button class="floating-player-close" onclick="closePlayer()" title="Close">×</button>
+  <!-- ═══ Floating "Now Playing" Card ═══ -->
+  <div class="now-playing" id="nowPlaying">
+    <button class="now-playing-icon" id="playPauseBtn" onclick="togglePlayPause()" title="Play / Pause">
+      <span class="vinyl" id="vinylIcon">♫</span>
+    </button>
+    <div class="now-playing-info">
+      <span class="now-playing-label">Now Playing</span>
+      <span class="now-playing-title">You Are In Love</span>
+      <span class="now-playing-artist">Taylor Swift</span>
     </div>
-    <iframe
-      id="spotify-iframe-floating"
-      style="border-radius:0 0 18px 18px"
-      src=""
-      width="100%" height="80" frameBorder="0"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"></iframe>
+    <button class="now-playing-close" onclick="closePlayer()" title="Close">×</button>
   </div>
+
+  <!-- Hidden audio element for the song -->
+  <audio id="bgAudio" loop preload="auto">
+    <source src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/music/Taylor%20Swift%20-%20You%20Are%20In%20Love%20(Taylor's%20Version)%20-%20(256%20Kbps).mp3" type="audio/mpeg">
+  </audio>
 
 
   <!-- ═══ Corner Florals ═══ -->
@@ -1372,39 +1427,61 @@
 
   <script>
     // ═══════════════════════════════════════════
-    //  MUSIC PLAYER (Spotify Embed)
+    //  MUSIC PLAYER (HTML5 Audio - looped MP3)
     // ═══════════════════════════════════════════
-    // To change the playlist, replace the ID below AND in the welcome prompt iframe src above.
-    // Example: https://open.spotify.com/playlist/[THIS_PART_IS_THE_ID]?...
-    const SPOTIFY_PLAYLIST_ID = '7uwLmtbM3Lm25Zk4a6vClE';
-    const SPOTIFY_EMBED_URL = `https://open.spotify.com/embed/playlist/${SPOTIFY_PLAYLIST_ID}?utm_source=generator&theme=0`;
+    // Song: "You Are In Love" by Taylor Swift (Taylor's Version)
+    // Hosted on Supabase, set to loop continuously.
+    const audio = document.getElementById('bgAudio');
+    const vinylIcon = document.getElementById('vinylIcon');
+    const playPauseBtn = document.getElementById('playPauseBtn');
 
-    function enterSite() {
-      // Stop the prompt iframe to release audio
-      const promptIframe = document.getElementById('spotify-iframe-prompt');
-      const promptSrc = promptIframe.src;
-      // Hide the welcome prompt
+    audio.volume = 0.45; // Soft volume - guests can hear but not blasting
+
+    function startMusic() {
       document.getElementById('musicPrompt').style.display = 'none';
-      // Load the floating player with the same playlist
-      const floatingIframe = document.getElementById('spotify-iframe-floating');
-      floatingIframe.src = SPOTIFY_EMBED_URL;
-      // Show the floating player
-      document.getElementById('floatingPlayer').classList.add('active');
-      // Pause the prompt iframe (since the floating one will keep playing)
-      promptIframe.src = '';
+      document.getElementById('nowPlaying').classList.add('active');
+      audio.play().then(() => {
+        vinylIcon.classList.add('spinning');
+        vinylIcon.textContent = '♫';
+      }).catch(err => {
+        console.log('Audio playback failed:', err);
+        vinylIcon.textContent = '▶';
+      });
     }
 
     function dismissMusic() {
-      // Stop the prompt iframe
-      document.getElementById('spotify-iframe-prompt').src = '';
       document.getElementById('musicPrompt').style.display = 'none';
     }
 
-    function closePlayer() {
-      document.getElementById('floatingPlayer').classList.remove('active');
-      // Clear the iframe src to stop the audio
-      document.getElementById('spotify-iframe-floating').src = '';
+    function togglePlayPause() {
+      if (audio.paused) {
+        audio.play().then(() => {
+          vinylIcon.classList.add('spinning');
+          vinylIcon.textContent = '♫';
+        });
+      } else {
+        audio.pause();
+        vinylIcon.classList.remove('spinning');
+        vinylIcon.textContent = '▶';
+      }
     }
+
+    function closePlayer() {
+      audio.pause();
+      audio.currentTime = 0;
+      vinylIcon.classList.remove('spinning');
+      document.getElementById('nowPlaying').classList.remove('active');
+    }
+
+    // Sync icon state to actual audio events (in case of buffering, etc.)
+    audio.addEventListener('play', () => {
+      vinylIcon.classList.add('spinning');
+      vinylIcon.textContent = '♫';
+    });
+    audio.addEventListener('pause', () => {
+      vinylIcon.classList.remove('spinning');
+      vinylIcon.textContent = '▶';
+    });
 
     // Pastel petals
     const colors = ['#f5b9c3','#f5dc8a','#95c4dc','#c9b8e8','#a8dcc4','#f0d985','#e8b4d4'];
