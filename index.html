@@ -777,15 +777,14 @@
       .music-prompt { padding: 2rem 1.5rem; max-width: 92vw; }
       .music-prompt-title { font-size: 2.1rem; }
       .music-prompt-text { font-size: 0.98rem; }
-      .now-playing {
-        bottom: 1rem; right: 1rem;
-        padding: 0.5rem 1rem 0.5rem 0.5rem;
+      .floating-player {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+        max-width: none;
       }
-      .now-playing-icon { width: 38px; height: 38px; }
-      .vinyl { font-size: 1.05rem; }
-      .now-playing-title { font-size: 1.25rem; max-width: 150px; }
-      .now-playing-artist { font-size: 0.78rem; max-width: 150px; }
-      .now-playing-label { font-size: 0.5rem; }
+      .floating-player-label { font-size: 1.05rem; }
     }
 
     @media (max-width: 420px) {
@@ -830,123 +829,56 @@
     }
     .spotify-embed-wrap iframe { display: block; width: 100%; }
 
-    /* Hidden Spotify iframe — off-screen but functional for audio */
-    .spotify-hidden {
+    /* Floating compact Spotify player */
+    .floating-player {
       position: fixed;
-      bottom: -200px;
-      right: -400px;
-      opacity: 0;
-      pointer-events: none;
-      width: 300px;
-      height: 80px;
-      z-index: -1;
-    }
-    .spotify-hidden.active {
-      bottom: 1rem;
-      right: 1rem;
-      opacity: 0.001; /* Still essentially invisible but allows audio context */
-      pointer-events: auto;
-      z-index: 1;
-    }
-
-    /* "Now Playing" floating card */
-    .now-playing {
-      position: fixed;
-      bottom: 1.5rem; right: 1.5rem;
-      background: linear-gradient(160deg, rgba(255,255,255,0.94), rgba(253,237,241,0.94));
+      bottom: 1.2rem; right: 1.2rem;
+      width: 320px;
+      max-width: calc(100vw - 2rem);
+      background: linear-gradient(160deg, rgba(255,255,255,0.96), rgba(253,237,241,0.96));
       border: 1px solid var(--card-border);
-      border-radius: 50px;
-      padding: 0.6rem 1.2rem 0.6rem 0.6rem;
+      border-radius: 18px;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 28px rgba(200,146,63,0.22);
+      box-shadow: 0 10px 32px rgba(200,146,63,0.25);
       display: none;
-      align-items: center;
-      gap: 0.85rem;
       z-index: 999;
-      max-width: calc(100vw - 3rem);
-      animation: nowPlayingIn 0.6s ease both;
+      overflow: hidden;
+      animation: floatIn 0.5s ease both;
     }
-    .now-playing.active { display: flex; }
-    @keyframes nowPlayingIn {
+    .floating-player.active { display: block; }
+    @keyframes floatIn {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .now-playing-icon {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold-light), var(--yellow-deep));
+    .floating-player-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(200,146,63,0.3);
-      position: relative;
+      justify-content: space-between;
+      padding: 0.6rem 0.9rem 0.5rem;
+      border-bottom: 1px solid rgba(200,146,63,0.18);
     }
-    .now-playing-icon::before {
-      content: '';
-      position: absolute;
-      width: 8px; height: 8px;
-      background: rgba(255,255,255,0.7);
-      border-radius: 50%;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-    }
-    .vinyl {
-      color: var(--ink);
-      font-size: 1.2rem;
-      animation: spin 4s linear infinite;
-      position: relative;
-      z-index: 0;
-    }
-    .now-playing-info {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      line-height: 1.2;
-    }
-    .now-playing-label {
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 600;
-      font-size: 0.55rem;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--gold-deep);
-      margin-bottom: 0.1rem;
-    }
-    .now-playing-title {
+    .floating-player-label {
       font-family: 'Parisienne', cursive;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: var(--ink);
       line-height: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 220px;
     }
-    .now-playing-artist {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 0.85rem;
-      color: var(--ink-soft);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 220px;
-    }
-    .now-playing-close {
+    .floating-player-close {
       background: transparent;
       border: none;
       color: var(--ink-muted);
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       cursor: pointer;
-      padding: 0 0.2rem;
+      padding: 0 0.3rem;
       line-height: 1;
-      align-self: flex-start;
-      margin-top: 0.2rem;
+      transition: color 0.2s;
     }
-    .now-playing-close:hover { color: var(--ink); }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .floating-player-close:hover { color: var(--ink); }
+    .floating-player iframe {
+      display: block;
+      width: 100%;
+      border: none;
+    }
     .music-prompt::before {
       content: '✦';
       position: absolute;
@@ -1045,33 +977,33 @@
     <p class="music-prompt-sub">For the full experience</p>
     <p class="music-prompt-text">
       We've made a little playlist just for you — songs that have made our hearts dance.
-      Press play and wander through with us.
+      Press play below and wander through with us.
     </p>
+    <div class="spotify-embed-wrap">
+      <iframe
+        id="spotify-iframe-prompt"
+        style="border-radius:14px"
+        src="https://open.spotify.com/embed/playlist/7uwLmtbM3Lm25Zk4a6vClE?utm_source=generator&theme=0"
+        width="100%" height="232" frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"></iframe>
+    </div>
     <div class="music-prompt-buttons">
-      <button class="music-btn music-btn--yes" onclick="enterSite()">Yes, play music ✦</button>
-      <button class="music-btn music-btn--no" onclick="dismissMusic()">No thanks</button>
+      <button class="music-btn music-btn--yes" onclick="enterSite()">Enter the celebration ✦</button>
     </div>
   </div>
 
-  <!-- ═══ Floating "Now Playing" Card ═══ -->
-  <div class="now-playing" id="nowPlaying">
-    <div class="now-playing-icon">
-      <span class="vinyl">♫</span>
+  <!-- ═══ Floating compact Spotify player ═══ -->
+  <div class="floating-player" id="floatingPlayer">
+    <div class="floating-player-header">
+      <span class="floating-player-label">♫ Our Playlist</span>
+      <button class="floating-player-close" onclick="closePlayer()" title="Close">×</button>
     </div>
-    <div class="now-playing-info">
-      <span class="now-playing-label">Now Playing</span>
-      <span class="now-playing-title">Enchanted</span>
-      <span class="now-playing-artist">Taylor Swift</span>
-    </div>
-    <button class="now-playing-close" onclick="closePlayer()" title="Close">×</button>
-  </div>
-
-  <!-- Hidden Spotify iframe (off-screen, music plays through it) -->
-  <div class="spotify-hidden" id="spotifyHidden">
     <iframe
-      id="spotify-iframe"
+      id="spotify-iframe-floating"
+      style="border-radius:0 0 18px 18px"
       src=""
-      width="300" height="80" frameBorder="0"
+      width="100%" height="80" frameBorder="0"
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       loading="lazy"></iframe>
   </div>
@@ -1440,36 +1372,38 @@
 
   <script>
     // ═══════════════════════════════════════════
-    //  MUSIC PLAYER (Hidden Spotify Embed)
+    //  MUSIC PLAYER (Spotify Embed)
     // ═══════════════════════════════════════════
-    // The Spotify iframe is loaded but kept off-screen (still functional for audio).
-    // The visible "Now Playing" card is just a decorative label.
-    //
-    // To change the playlist, replace the ID below with your own from the Spotify share link.
+    // To change the playlist, replace the ID below AND in the welcome prompt iframe src above.
     // Example: https://open.spotify.com/playlist/[THIS_PART_IS_THE_ID]?...
     const SPOTIFY_PLAYLIST_ID = '7uwLmtbM3Lm25Zk4a6vClE';
     const SPOTIFY_EMBED_URL = `https://open.spotify.com/embed/playlist/${SPOTIFY_PLAYLIST_ID}?utm_source=generator&theme=0`;
 
     function enterSite() {
+      // Stop the prompt iframe to release audio
+      const promptIframe = document.getElementById('spotify-iframe-prompt');
+      const promptSrc = promptIframe.src;
       // Hide the welcome prompt
       document.getElementById('musicPrompt').style.display = 'none';
-      // Show the decorative "Now Playing" card
-      document.getElementById('nowPlaying').classList.add('active');
-      // Load + position the hidden Spotify iframe so it can play audio
-      const iframe = document.getElementById('spotify-iframe');
-      iframe.src = SPOTIFY_EMBED_URL;
-      document.getElementById('spotifyHidden').classList.add('active');
+      // Load the floating player with the same playlist
+      const floatingIframe = document.getElementById('spotify-iframe-floating');
+      floatingIframe.src = SPOTIFY_EMBED_URL;
+      // Show the floating player
+      document.getElementById('floatingPlayer').classList.add('active');
+      // Pause the prompt iframe (since the floating one will keep playing)
+      promptIframe.src = '';
     }
 
     function dismissMusic() {
+      // Stop the prompt iframe
+      document.getElementById('spotify-iframe-prompt').src = '';
       document.getElementById('musicPrompt').style.display = 'none';
     }
 
     function closePlayer() {
-      document.getElementById('nowPlaying').classList.remove('active');
-      document.getElementById('spotifyHidden').classList.remove('active');
+      document.getElementById('floatingPlayer').classList.remove('active');
       // Clear the iframe src to stop the audio
-      document.getElementById('spotify-iframe').src = '';
+      document.getElementById('spotify-iframe-floating').src = '';
     }
 
     // Pastel petals
