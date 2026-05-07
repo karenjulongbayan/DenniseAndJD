@@ -750,6 +750,211 @@
     .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+    /* ─── Gallery ─── */
+    #gallery {
+      background: linear-gradient(135deg, rgba(245,185,195,.2) 0%, rgba(201,184,232,.18) 50%, rgba(168,220,196,.2) 100%);
+      overflow: hidden;
+    }
+
+    .gallery-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--ink-soft);
+      max-width: 600px;
+      margin: 0 auto 3.5rem;
+      line-height: 1.85;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      perspective: 1200px;
+    }
+
+    .photo-frame {
+      position: relative;
+      background: #fff;
+      padding: 1.1rem 1.1rem 3.5rem;
+      border-radius: 6px;
+      box-shadow:
+        0 8px 30px rgba(74,58,44,0.18),
+        0 2px 10px rgba(200,146,63,0.12),
+        inset 0 0 0 1px rgba(200,146,63,0.1);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s;
+      cursor: pointer;
+    }
+    .photo-frame:nth-child(1) { transform: rotate(-3deg) translateY(20px); }
+    .photo-frame:nth-child(2) { transform: rotate(1deg); z-index: 2; }
+    .photo-frame:nth-child(3) { transform: rotate(2.5deg) translateY(15px); }
+
+    .photo-frame:hover {
+      transform: rotate(0deg) translateY(-12px) scale(1.04);
+      box-shadow:
+        0 24px 60px rgba(74,58,44,0.28),
+        0 8px 20px rgba(200,146,63,0.2),
+        inset 0 0 0 1px rgba(200,146,63,0.2);
+      z-index: 10;
+    }
+
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      top: 8px; right: 8px; bottom: 8px; left: 8px;
+      border: 1px solid rgba(200,146,63,0.18);
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Decorative corner sparkles on each frame */
+    .photo-frame::after {
+      content: '✦';
+      position: absolute;
+      top: -10px; right: -10px;
+      color: var(--gold);
+      font-size: 1.4rem;
+      opacity: 0.85;
+      filter: drop-shadow(0 2px 4px rgba(200,146,63,0.3));
+      animation: gentleFloat 4s ease-in-out infinite;
+    }
+    .photo-frame:nth-child(2)::after { animation-delay: 0.7s; right: auto; left: -10px; top: -8px; }
+    .photo-frame:nth-child(3)::after { animation-delay: 1.4s; right: -12px; top: auto; bottom: 60px; }
+
+    .photo-frame img {
+      display: block;
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 3px;
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    /* Polaroid caption */
+    .photo-caption {
+      position: absolute;
+      bottom: 0.9rem;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'Parisienne', cursive;
+      font-size: 1.5rem;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+    .photo-caption-sub {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.78rem;
+      color: var(--gold-deep);
+      margin-top: 0.2rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Tape decoration on top of polaroids */
+    .photo-tape {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      width: 80px; height: 22px;
+      background: linear-gradient(180deg,
+        rgba(245,220,138,0.55) 0%,
+        rgba(245,220,138,0.7) 50%,
+        rgba(245,220,138,0.55) 100%);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      z-index: 3;
+    }
+    .photo-tape::before, .photo-tape::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 8px;
+      background: inherit;
+    }
+    .photo-tape::before { left: -8px; clip-path: polygon(100% 0, 100% 100%, 0 60%, 0 40%); }
+    .photo-tape::after  { right: -8px; clip-path: polygon(0 0, 0 100%, 100% 60%, 100% 40%); }
+
+    .photo-frame:nth-child(2) .photo-tape { transform: translateX(-50%) rotate(2deg); background: linear-gradient(180deg, rgba(245,185,195,0.55), rgba(245,185,195,0.7), rgba(245,185,195,0.55)); }
+    .photo-frame:nth-child(3) .photo-tape { transform: translateX(-50%) rotate(-2deg); background: linear-gradient(180deg, rgba(149,196,220,0.55), rgba(149,196,220,0.7), rgba(149,196,220,0.55)); }
+
+    /* Gallery quote underneath */
+    .gallery-quote {
+      margin-top: 4rem;
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      color: var(--gold-deep);
+      line-height: 1.4;
+    }
+    .gallery-quote-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 1.2rem auto 0;
+      width: min(280px, 80vw);
+      color: var(--gold);
+    }
+    .gallery-quote-divider::before, .gallery-quote-divider::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-light), var(--gold));
+    }
+    .gallery-quote-divider::after { background: linear-gradient(to left, transparent, var(--gold-light), var(--gold)); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(74,58,44,0.92);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+      animation: lbFade 0.3s ease both;
+      padding: 2rem;
+    }
+    .lightbox.active { display: flex; }
+    @keyframes lbFade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 86vh;
+      border-radius: 8px;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+      border: 8px solid #fff;
+      animation: lbZoom 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes lbZoom {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.92);
+      border: none;
+      color: var(--ink);
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .lightbox-close:hover {
+      background: #fff;
+      transform: scale(1.08) rotate(90deg);
+    }
+
+    /* ─── End Gallery ─── */
+
     @media (max-width: 720px) {
       section { padding: 4.5rem 1.2rem; }
       #hero { padding: 6rem 1.2rem 4rem; }
@@ -761,6 +966,19 @@
       .corner { width: 130px; height: 130px; opacity: 0.55; }
       .rsvp-form { padding: 1.5rem 1.2rem; }
       .story-card { padding: 2.5rem 1.5rem; }
+
+      /* Gallery — single column on mobile */
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        max-width: 360px;
+      }
+      .photo-frame:nth-child(1) { transform: rotate(-2deg); }
+      .photo-frame:nth-child(2) { transform: rotate(1.5deg); }
+      .photo-frame:nth-child(3) { transform: rotate(-1deg); }
+      .photo-frame:hover { transform: rotate(0deg) translateY(-6px) scale(1.02); }
+      .photo-frame img { height: 320px; }
+      .gallery-intro { font-size: 1.1rem; margin-bottom: 2.5rem; }
       .story-card::before, .story-card::after { font-size: 7rem; }
       .section-body { font-size: 1.08rem; line-height: 1.75; }
       .hero__pre::before, .hero__pre::after { margin: 0 0.4em; }
@@ -1063,6 +1281,12 @@
     <source src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/music/Taylor%20Swift%20-%20You%20Are%20In%20Love%20(Taylor's%20Version)%20-%20(256%20Kbps).mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Lightbox for gallery photos -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox(event)" title="Close">×</button>
+    <img id="lightboxImg" src="" alt="Wedding photo">
+  </div>
+
 
   <!-- ═══ Corner Florals ═══ -->
   <svg class="corner corner--tl" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1186,6 +1410,7 @@
   <!-- Nav -->
   <nav>
     <a href="#story">Our Story</a>
+    <a href="#gallery">Gallery</a>
     <a href="#party">Wedding Party</a>
     <a href="#details">Details</a>
     <a href="#rsvp">RSVP</a>
@@ -1250,6 +1475,52 @@
           <p class="milestone-title">The Proposal</p>
           <p class="milestone-desc">Under a golden sky, with a heart full of certainty, he asked — and she said yes.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GALLERY ═══ -->
+  <section id="gallery">
+    <div class="section-inner fade-in">
+      <p class="section-label">Captured Moments</p>
+      <h2 class="section-title">Our Little Gallery</h2>
+      <p class="section-subtitle">Frozen in Time, Held in Heart</p>
+      <div class="flourish">
+        <span class="flourish-icon">❀</span>
+      </div>
+      <p class="gallery-intro">
+        A few of our favorite moments together — small windows into the love we've built,
+        the laughter we've shared, and the journey that brought us here.
+      </p>
+
+      <div class="gallery-grid">
+        <div class="photo-frame fade-in" onclick="openLightbox('https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/469601707_18481175053020440_4576616582408666373_n.jpg')">
+          <div class="photo-tape"></div>
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/469601707_18481175053020440_4576616582408666373_n.jpg" alt="Dennisse and JD" loading="lazy">
+          <p class="photo-caption">Always</p>
+          <span class="photo-caption-sub">— forever yours —</span>
+        </div>
+
+        <div class="photo-frame fade-in" onclick="openLightbox('https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/497542935_10047770668578820_205130324125817314_n.jpg')">
+          <div class="photo-tape"></div>
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/497542935_10047770668578820_205130324125817314_n.jpg" alt="Dennisse and JD together" loading="lazy">
+          <p class="photo-caption">Together</p>
+          <span class="photo-caption-sub">— our favorite place —</span>
+        </div>
+
+        <div class="photo-frame fade-in" onclick="openLightbox('https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/482244317_9631956730160218_4708264871507332471_n.jpg')">
+          <div class="photo-tape"></div>
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/482244317_9631956730160218_4708264871507332471_n.jpg" alt="Dennisse and JD" loading="lazy">
+          <p class="photo-caption">Forever</p>
+          <span class="photo-caption-sub">— from this day on —</span>
+        </div>
+      </div>
+
+      <p class="gallery-quote">
+        "And in your eyes, I found my home."
+      </p>
+      <div class="gallery-quote-divider">
+        <span>✦</span>
       </div>
     </div>
   </section>
@@ -1481,6 +1752,27 @@
     audio.addEventListener('pause', () => {
       vinylIcon.classList.remove('spinning');
       vinylIcon.textContent = '▶';
+    });
+
+    // ═══════════════════════════════════════════
+    //  GALLERY LIGHTBOX
+    // ═══════════════════════════════════════════
+    function openLightbox(src) {
+      const lb = document.getElementById('lightbox');
+      const img = document.getElementById('lightboxImg');
+      img.src = src;
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e) {
+      // Only close on background or close-button click — not when clicking the image itself
+      if (e && e.target.tagName === 'IMG' && e.target.id === 'lightboxImg') return;
+      const lb = document.getElementById('lightbox');
+      lb.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
     });
 
     // Pastel petals
