@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dennisse & JD ✦ A Love Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Italianno&family=Yeseva+One&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Pastels — slightly more saturated for visibility */
+      --gold:        #c8923f;
+      --gold-deep:   #a87520;
+      --gold-light:  #f0d985;
+      --blush:       #f5b9c3;
+      --blush-deep:  #e08a96;
+      --sky:         #95c4dc;
+      --sky-deep:    #6ba8c4;
+      --lavender:    #c9b8e8;
+      --lavender-deep:#a896d4;
+      --yellow:      #f5dc8a;
+      --yellow-deep: #e8c860;
+      --mint:        #a8dcc4;
+      --mint-deep:   #7fc4a4;
+      --sage:        #9bc090;
+      --sage-deep:   #6da062;
+
+      /* TEXT — darker for maximum readability */
+      --ink:         #4a3a2c;        /* deep warm brown — main heading */
+      --ink-soft:    #6b5340;        /* warm cocoa — body */
+      --ink-muted:   #8a7460;        /* lighter brown — secondary */
+      --ink-pale:    #a89380;
+
+      --card:        rgba(255,255,255,0.78);
+      --card-strong: rgba(255,255,255,0.88);
+      --card-border: rgba(200,146,63,0.32);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: var(--ink-soft);
+      overflow-x: hidden;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 80% 55% at 10% 8%,  rgba(168,220,196,.55) 0%, transparent 58%),
+        radial-gradient(ellipse 65% 50% at 92% 18%, rgba(245,185,195,.5)  0%, transparent 55%),
+        radial-gradient(ellipse 75% 55% at 50% 85%, rgba(149,196,220,.42) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 45% at 82% 92%, rgba(201,184,232,.45) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 30% 55%, rgba(245,220,138,.32) 0%, transparent 55%),
+        linear-gradient(155deg, #fdfaf3 0%, #ecf6e6 30%, #fdedf1 58%, #ebf3fa 100%);
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(circle 320px at 18% 28%, rgba(155,192,144,.18) 0%, transparent 70%),
+        radial-gradient(circle 260px at 78% 14%, rgba(245,185,195,.22) 0%, transparent 70%),
+        radial-gradient(circle 290px at 62% 72%, rgba(149,196,220,.18) 0%, transparent 70%),
+        radial-gradient(circle 210px at 8% 82%,  rgba(245,220,138,.22) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: blobDrift 18s ease-in-out infinite alternate;
+    }
+    @keyframes blobDrift {
+      from { transform: scale(1)    translateY(0); }
+      to   { transform: scale(1.05) translateY(-12px); }
+    }
+
+    /* Sparkle layer */
+    .sparkle {
+      position: fixed;
+      width: 4px; height: 4px;
+      background: radial-gradient(circle, #fff 0%, var(--gold-light) 50%, transparent 80%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 6;
+      animation: sparkleFlicker 3s infinite;
+    }
+    @keyframes sparkleFlicker {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50%      { opacity: 1; transform: scale(1.4); }
+    }
+
+    /* ─── Corner Florals ─── */
+    .corner {
+      position: fixed;
+      width: 280px; height: 280px;
+      pointer-events: none;
+      z-index: 10; opacity: 0.85;
+    }
+    .corner--tl { top: 0; left: 0;     transform: rotate(0deg); }
+    .corner--tr { top: 0; right: 0;    transform: rotate(90deg); }
+    .corner--bl { bottom: 0; left: 0;  transform: rotate(270deg); }
+    .corner--br { bottom: 0; right: 0; transform: rotate(180deg); }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      display: flex; justify-content: center; gap: 2.4rem;
+      padding: 1.2rem 2rem;
+      background: linear-gradient(to bottom, rgba(253,250,243,.96) 0%, rgba(253,250,243,0) 100%);
+      backdrop-filter: blur(8px);
+    }
+    nav a {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 500;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: all .3s;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: all .3s;
+      transform: translateX(-50%);
+    }
+    nav a:hover { color: var(--gold-deep); }
+    nav a:hover::after { width: 100%; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 5rem;
+      position: relative; z-index: 1;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      width: 720px; height: 720px; border-radius: 50%;
+      background: radial-gradient(ellipse,
+        rgba(245,220,138,.42) 0%,
+        rgba(245,185,195,.22) 40%,
+        transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+
+    .hero__pre {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      color: var(--sage-deep);
+      margin-bottom: 1.6rem;
+      animation: fadeUp 1.2s ease both;
+    }
+    .hero__pre::before, .hero__pre::after {
+      content: '✦';
+      margin: 0 0.8em;
+      color: var(--gold);
+    }
+
+    .hero__names {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(5.5rem, 16vw, 13rem);
+      color: var(--ink);
+      line-height: 0.95;
+      animation: fadeUp 1.4s .2s ease both;
+      position: relative; z-index:1;
+      text-shadow:
+        0 2px 0 rgba(255,255,255,.8),
+        0 4px 18px rgba(200,146,63,.18);
+    }
+    .hero__ampersand {
+      font-family: 'Italianno', cursive;
+      color: var(--gold-deep);
+      display: block;
+      font-size: clamp(4rem, 10vw, 8rem);
+      line-height: 1.1;
+      text-shadow: 0 3px 14px rgba(200,146,63,.3);
+    }
+
+    .hero__divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 2.5rem auto;
+      width: min(450px, 85vw);
+      animation: fadeUp 1.2s .4s ease both;
+    }
+    .hero__divider-line {
+      flex:1; height:1px;
+      background: linear-gradient(to right, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent);
+    }
+    .hero__divider-gem {
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold-deep);
+      font-size: 1rem;
+    }
+
+    .hero__date {
+      font-family: 'Yeseva One', serif;
+      font-size: clamp(1.2rem, 3.2vw, 1.8rem);
+      letter-spacing: 0.1em;
+      color: var(--ink);
+      animation: fadeUp 1.2s .6s ease both;
+      margin-bottom: 0.4rem;
+    }
+    .hero__location {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.2rem;
+      color: var(--sage-deep);
+      animation: fadeUp 1.2s .8s ease both;
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      animation: fadeUp 1.2s 1.2s ease both;
+    }
+    .hero__scroll span {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 500;
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+    .scroll-arrow {
+      width: 1px; height: 42px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    /* ─── Section Commons ─── */
+    section { position:relative; z-index:1; padding: 6.5rem 2rem; }
+    .section-inner { max-width: 880px; margin: 0 auto; text-align: center; }
+
+    .section-label {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 1rem;
+      display: inline-block;
+      position: relative;
+    }
+    .section-label::before, .section-label::after {
+      content: '✦'; color: var(--gold); margin: 0 0.7em;
+      font-size: 0.9em;
+    }
+
+    .section-title {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(3.5rem, 9vw, 6rem);
+      color: var(--ink);
+      line-height: 1.05;
+      margin-bottom: 1.6rem;
+      text-shadow: 0 2px 0 rgba(255,255,255,.7);
+    }
+
+    .section-subtitle {
+      font-family: 'Yeseva One', serif;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    .section-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      line-height: 1.85;
+      color: var(--ink-soft);
+    }
+
+    /* Whimsical flourish under titles */
+    .flourish {
+      display: inline-flex;
+      align-items: center; gap: 0.6rem;
+      margin: 0.5rem auto 2rem;
+      color: var(--gold);
+    }
+    .flourish::before, .flourish::after {
+      content: '';
+      width: 50px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .flourish::after { background: linear-gradient(to left, transparent, var(--gold)); }
+    .flourish-icon { font-size: 1.2rem; }
+
+    /* ─── Story ─── */
+    #story { background: linear-gradient(135deg, rgba(168,220,196,.25) 0%, rgba(245,185,195,.18) 100%); }
+
+    .story-card {
+      background: var(--card-strong);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 4rem 3.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 8px 50px rgba(155,192,144,.18),
+        0 2px 14px rgba(245,185,195,.12),
+        inset 0 1px 0 rgba(255,255,255,.6);
+      margin-top: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .story-card::before {
+      content: '\201C';
+      position: absolute;
+      top: -1.2rem; left: 1.8rem;
+      font-family: 'Parisienne', cursive;
+      font-size: 11rem;
+      color: var(--gold-light);
+      opacity: .7;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .story-card::after {
+      content: '\201D';
+      position: absolute;
+      bottom: -4rem; right: 1.8rem;
+      font-family: 'Parisienne', cursive;
+      font-size: 11rem;
+      color: var(--gold-light);
+      opacity: .7;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .story-milestone {
+      padding: 2.6rem 1.6rem;
+      border-radius: 24px;
+      border: 1.5px solid transparent;
+      transition: all .35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .story-milestone::before {
+      content: '';
+      position: absolute;
+      top: -10px; right: -10px;
+      width: 60px; height: 60px;
+      background: radial-gradient(circle, rgba(255,255,255,.5) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .story-milestone:hover {
+      transform: translateY(-6px) rotate(-1deg);
+      box-shadow: 0 18px 40px rgba(155,192,144,.22);
+    }
+    .story-milestone:nth-child(1) {
+      background: linear-gradient(160deg, rgba(168,220,196,.55), rgba(168,220,196,.3));
+      border-color: rgba(127,196,164,.4);
+    }
+    .story-milestone:nth-child(2) {
+      background: linear-gradient(160deg, rgba(245,185,195,.55), rgba(245,185,195,.3));
+      border-color: rgba(224,138,150,.4);
+    }
+    .story-milestone:nth-child(3) {
+      background: linear-gradient(160deg, rgba(245,220,138,.55), rgba(245,220,138,.3));
+      border-color: rgba(232,200,96,.4);
+    }
+    .milestone-icon {
+      font-size: 2.6rem;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+      animation: gentleFloat 4s ease-in-out infinite;
+    }
+    .story-milestone:nth-child(2) .milestone-icon { animation-delay: 0.5s; }
+    .story-milestone:nth-child(3) .milestone-icon { animation-delay: 1s; }
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
+    }
+    .milestone-year {
+      font-family: 'Parisienne', cursive;
+      font-size: 1.8rem;
+      color: var(--gold-deep);
+      display: block;
+      margin-bottom: 0.3rem;
+      line-height: 1;
+    }
+    .milestone-title {
+      font-family: 'Yeseva One', serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin-bottom: 0.7rem;
+    }
+    .milestone-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+
+    /* ─── Wedding Party ─── */
+    #party { background: linear-gradient(135deg, rgba(201,184,232,.22) 0%, rgba(149,196,220,.22) 100%); }
+
+    .party-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3.5rem;
+    }
+    .party-side {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 30px rgba(149,196,220,.14);
+    }
+    .party-side-title {
+      font-family: 'Parisienne', cursive;
+      font-size: 3.2rem;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+      text-align: center;
+      line-height: 1;
+    }
+    .party-side-sub {
+      text-align: center;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 1.5rem;
+    }
+    .party-member {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(200,146,63,.18);
+    }
+    .party-member:last-child { border-bottom: none; }
+
+    .party-avatar {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    }
+    .party-avatar--blush { background: linear-gradient(135deg, #f5b9c3, #f5dc8a); }
+    .party-avatar--sky   { background: linear-gradient(135deg, #95c4dc, #c9b8e8); }
+
+    .party-member-name {
+      font-family: 'Yeseva One', serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .party-member-role {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--gold-deep);
+    }
+
+    /* ─── Details ─── */
+    #details { background: linear-gradient(135deg, rgba(245,220,138,.22) 0%, rgba(168,220,196,.22) 100%); }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3.5rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .detail-card {
+      background: var(--card-strong);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 2.6rem 2rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 28px rgba(155,192,144,.14);
+      transition: transform .35s ease, box-shadow .35s ease;
+      position: relative;
+    }
+    .detail-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 50px rgba(155,192,144,.22);
+    }
+    .detail-icon {
+      font-size: 2.6rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    .detail-title {
+      font-family: 'Parisienne', cursive;
+      font-size: 2rem;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+      line-height: 1;
+    }
+    .detail-divider {
+      width: 32px; height: 1px;
+      background: var(--gold);
+      margin: 0.6rem auto 1rem;
+    }
+    .detail-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--ink-soft);
+    }
+    .detail-highlight {
+      color: var(--gold-deep);
+      font-family: 'Yeseva One', serif;
+      font-size: 1.15rem;
+      display: inline-block;
+      margin: 0.2rem 0;
+    }
+
+    /* ─── RSVP ─── */
+    #rsvp { background: linear-gradient(135deg, rgba(245,185,195,.25) 0%, rgba(245,220,138,.2) 100%); }
+
+    .rsvp-form {
+      max-width: 560px;
+      margin: 3rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+      background: var(--card);
+      padding: 2.5rem;
+      border-radius: 24px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 40px rgba(245,185,195,.18);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; text-align: left; }
+    .form-group label {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,.85);
+      border: 1.5px solid rgba(200,146,63,.3);
+      border-radius: 14px;
+      padding: 0.9rem 1.1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--ink);
+      outline: none;
+      transition: all .3s;
+      width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--ink-pale);
+      font-style: italic;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(200,146,63,.12);
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+
+    .btn-rsvp {
+      background: linear-gradient(135deg, var(--gold-light), var(--yellow-deep));
+      border: 1.5px solid var(--gold);
+      color: var(--ink);
+      font-family: 'Yeseva One', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all .3s;
+      align-self: center;
+      margin-top: 0.6rem;
+      box-shadow: 0 6px 18px rgba(200,146,63,.22);
+    }
+    .btn-rsvp:hover {
+      background: linear-gradient(135deg, var(--blush), var(--gold-light));
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(200,146,63,.32);
+    }
+
+    .rsvp-note {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--ink-muted);
+      text-align: center;
+      margin-top: 1.2rem;
+    }
+    .rsvp-note a { color: var(--gold-deep); font-weight: 500; }
+
+    /* ─── Registry ─── */
+    #registry { background: linear-gradient(135deg, rgba(149,196,220,.22) 0%, rgba(168,220,196,.22) 100%); }
+
+    .registry-cards {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    .registry-card {
+      background: var(--card-strong);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 2.6rem 3rem;
+      text-align: center;
+      cursor: pointer;
+      min-width: 210px;
+      box-shadow: 0 6px 24px rgba(149,196,220,.18);
+      transition: all .35s;
+    }
+    .registry-card:hover {
+      transform: translateY(-6px) rotate(1deg);
+      box-shadow: 0 16px 40px rgba(155,192,144,.22);
+    }
+    .registry-card-icon { font-size: 2.6rem; margin-bottom: 0.9rem; display: block; }
+    .registry-card-name {
+      font-family: 'Yeseva One', serif;
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+    .registry-card-link {
+      font-family: 'Parisienne', cursive;
+      font-size: 1.4rem;
+      color: var(--gold-deep);
+      margin-top: 0.5rem;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      position: relative; z-index: 1;
+      background: linear-gradient(to top, rgba(245,185,195,.25), transparent);
+    }
+    .footer-names {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(3rem, 7vw, 5rem);
+      color: var(--ink);
+      margin-bottom: 0.8rem;
+      line-height: 1;
+    }
+    .footer-sub {
+      font-family: 'Yeseva One', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.18em;
+      color: var(--gold-deep);
+    }
+    .footer-line {
+      width: 140px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent);
+      margin: 1.5rem auto;
+    }
+    .footer-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      line-height: 1.8;
+      margin-top: 1.5rem;
+      max-width: 540px;
+      margin-left: auto; margin-right: auto;
+    }
+    .footer-quote-author {
+      font-family: 'Parisienne', cursive;
+      font-size: 1.6rem;
+      color: var(--gold-deep);
+      margin-top: 1rem;
+      display: block;
+    }
+
+    /* ─── Petals & Stars ─── */
+    .petal {
+      position: fixed;
+      border-radius: 50% 50% 50% 0;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+      animation: petalFall linear infinite;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
+    }
+    .star {
+      position: fixed;
+      color: var(--gold);
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0;
+      animation: starFall linear infinite;
+      font-size: 14px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%,100% { opacity: .4; }
+      50%     { opacity: 1; }
+    }
+    @keyframes petalFall {
+      0%   { opacity: 0;   transform: translateY(-30px) rotate(0deg)   translateX(0); }
+      8%   { opacity: .8; }
+      90%  { opacity: .55; }
+      100% { opacity: 0;   transform: translateY(108vh) rotate(720deg) translateX(60px); }
+    }
+    @keyframes starFall {
+      0%   { opacity: 0;   transform: translateY(-30px) rotate(0deg); }
+      10%  { opacity: 0.85; }
+      90%  { opacity: 0.4; }
+      100% { opacity: 0;   transform: translateY(108vh) rotate(360deg); }
+    }
+
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 720px) {
+      .story-grid, .details-grid { grid-template-columns: 1fr; }
+      .party-columns { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      nav { gap: 1.2rem; flex-wrap: wrap; padding: 0.8rem 1rem; }
+      nav a { font-size: 0.7rem; }
+      .corner { width: 150px; height: 150px; }
+      .rsvp-form { padding: 1.5rem; }
+    }
+
+    /* ─── Music Player ─── */
+    .music-prompt {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(160deg, rgba(255,255,255,0.96) 0%, rgba(253,237,241,0.96) 100%);
+      border: 1.5px solid var(--card-border);
+      border-radius: 28px;
+      padding: 2.6rem 2.8rem;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 20px 80px rgba(200,146,63,0.25),
+        0 8px 28px rgba(245,185,195,0.3);
+      z-index: 1000;
+      text-align: center;
+      max-width: 380px;
+      width: 90vw;
+      animation: promptFadeIn 0.8s ease both;
+    }
+    .music-prompt::before {
+      content: '✦';
+      position: absolute;
+      top: 12px; left: 18px;
+      color: var(--gold);
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+    .music-prompt::after {
+      content: '✦';
+      position: absolute;
+      bottom: 12px; right: 18px;
+      color: var(--gold);
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+    @keyframes promptFadeIn {
+      from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+      to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+    .music-prompt-icon {
+      font-size: 2.4rem;
+      margin-bottom: 0.4rem;
+      display: inline-block;
+      animation: gentleFloat 3s ease-in-out infinite;
+    }
+    .music-prompt-title {
+      font-family: 'Parisienne', cursive;
+      font-size: 2.6rem;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .music-prompt-sub {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 1.2rem;
+    }
+    .music-prompt-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .music-prompt-buttons {
+      display: flex;
+      gap: 0.7rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .music-btn {
+      font-family: 'Yeseva One', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      padding: 0.75rem 1.7rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1.5px solid;
+    }
+    .music-btn--yes {
+      background: linear-gradient(135deg, var(--gold-light), var(--yellow-deep));
+      border-color: var(--gold);
+      color: var(--ink);
+      box-shadow: 0 6px 18px rgba(200,146,63,0.22);
+    }
+    .music-btn--yes:hover {
+      background: linear-gradient(135deg, var(--blush), var(--gold-light));
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(200,146,63,0.32);
+    }
+    .music-btn--no {
+      background: rgba(255,255,255,0.6);
+      border-color: rgba(200,146,63,0.3);
+      color: var(--ink-muted);
+    }
+    .music-btn--no:hover {
+      background: rgba(255,255,255,0.9);
+      color: var(--ink);
+    }
+
+    /* Floating mini player (after user enables) */
+    .music-player {
+      position: fixed;
+      bottom: 1.5rem; right: 1.5rem;
+      background: linear-gradient(160deg, rgba(255,255,255,0.92), rgba(253,237,241,0.92));
+      border: 1px solid var(--card-border);
+      border-radius: 50px;
+      padding: 0.6rem 1rem 0.6rem 0.6rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 28px rgba(200,146,63,0.2);
+      display: none;
+      align-items: center;
+      gap: 0.7rem;
+      z-index: 999;
+      max-width: calc(100vw - 3rem);
+    }
+    .music-player.active { display: flex; }
+    .music-player-toggle {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--gold-light), var(--yellow-deep));
+      color: var(--ink);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(200,146,63,0.3);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .music-player-toggle:hover { transform: scale(1.08); }
+    .music-player-toggle.playing {
+      animation: spin 6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .music-player-info {
+      display: flex; flex-direction: column;
+      min-width: 0;
+    }
+    .music-player-label {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+    }
+    .music-player-title {
+      font-family: 'Parisienne', cursive;
+      font-size: 1.3rem;
+      color: var(--ink);
+      line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+    .music-player-close {
+      background: transparent;
+      border: none;
+      color: var(--ink-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0 0.3rem;
+      line-height: 1;
+    }
+    .music-player-close:hover { color: var(--ink); }
+
+    /* Hidden YouTube player container */
+    #yt-player-container {
+      position: fixed;
+      width: 1px; height: 1px;
+      opacity: 0;
+      pointer-events: none;
+      bottom: 0; left: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Music Welcome Prompt ═══ -->
+  <div class="music-prompt" id="musicPrompt">
+    <div class="music-prompt-icon">🎵</div>
+    <p class="music-prompt-title">A Little Music?</p>
+    <p class="music-prompt-sub">For the full experience</p>
+    <p class="music-prompt-text">
+      We've made a little playlist just for you — songs that have made our hearts dance.
+      Would you like to listen as you wander through?
+    </p>
+    <div class="music-prompt-buttons">
+      <button class="music-btn music-btn--yes" onclick="startMusic()">Yes, please ✦</button>
+      <button class="music-btn music-btn--no" onclick="dismissMusic()">No thanks</button>
+    </div>
+  </div>
+
+  <!-- ═══ Floating Music Player ═══ -->
+  <div class="music-player" id="musicPlayer">
+    <button class="music-player-toggle" id="musicToggle" onclick="toggleMusic()">♫</button>
+    <div class="music-player-info">
+      <span class="music-player-label">Now Playing</span>
+      <span class="music-player-title" id="musicTitle">Our Playlist</span>
+    </div>
+    <button class="music-player-close" onclick="closePlayer()" title="Close">×</button>
+  </div>
+
+  <!-- Hidden YouTube IFrame player -->
+  <div id="yt-player-container"><div id="yt-player"></div></div>
+
+
+  <!-- ═══ Corner Florals ═══ -->
+  <svg class="corner corner--tl" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.9">
+      <path d="M12 208 Q35 155 68 108 Q100 62 152 18" stroke="#c8923f" stroke-width="1.3"/>
+      <path d="M12 208 Q55 175 95 145" stroke="#c8923f" stroke-width=".9"/>
+      <path d="M12 208 Q45 182 82 164" stroke="#c8923f" stroke-width=".75"/>
+      <path d="M68 108 Q60 90 72 82 Q82 90 68 108Z" stroke="#c8923f" stroke-width=".7" fill="rgba(168,220,196,.6)"/>
+      <path d="M95 145 Q110 130 115 146 Q106 152 95 145Z" stroke="#c8923f" stroke-width=".7" fill="rgba(168,220,196,.55)"/>
+      <path d="M45 178 Q60 168 60 181 Q52 186 45 178Z" stroke="#c8923f" stroke-width=".7" fill="rgba(168,220,196,.5)"/>
+      <circle cx="152" cy="18" r="3.5" fill="#c8923f"/>
+      <circle cx="152" cy="9"  r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="160" cy="15" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="144" cy="15" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="158" cy="25" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="146" cy="25" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="68" cy="108" r="3.5" fill="#e08a96"/>
+      <path d="M68 99  Q73 104 68 108 Q63 104 68 99Z"  fill="#f5b9c3" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M77 108 Q72 113 68 108 Q72 103 77 108Z" fill="#f5b9c3" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M68 117 Q63 113 68 108 Q73 113 68 117Z" fill="#f5b9c3" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M59 108 Q64 103 68 108 Q63 113 59 108Z" fill="#f5b9c3" stroke="#c8923f" stroke-width=".5"/>
+      <ellipse cx="96" cy="72" rx="5" ry="8" fill="rgba(149,196,220,.7)" stroke="#c8923f" stroke-width=".5" transform="rotate(-28 96 72)"/>
+      <line x1="96" y1="80" x2="94" y2="90" stroke="#c8923f" stroke-width=".8"/>
+      <ellipse cx="120" cy="50" rx="4.5" ry="6.5" fill="rgba(201,184,232,.7)" stroke="#c8923f" stroke-width=".5" transform="rotate(-12 120 50)"/>
+      <line x1="120" y1="56" x2="117" y2="65" stroke="#c8923f" stroke-width=".8"/>
+      <ellipse cx="55" cy="148" rx="4" ry="6" fill="rgba(245,220,138,.75)" stroke="#c8923f" stroke-width=".5" transform="rotate(10 55 148)"/>
+      <line x1="55" y1="154" x2="53" y2="163" stroke="#c8923f" stroke-width=".8"/>
+      <path d="M80 168 Q88 158 92 170" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <path d="M80 168 Q72 158 68 170" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <path d="M105 130 Q113 120 117 132" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <path d="M105 130 Q97 120 93 132" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <circle cx="52" cy="138" r="1.8" fill="#c8923f"/>
+      <circle cx="78" cy="122" r="1.4" fill="#c8923f" opacity=".7"/>
+      <circle cx="108" cy="92" r="1.4" fill="#c8923f" opacity=".7"/>
+      <circle cx="133" cy="60" r="1.8" fill="#c8923f"/>
+      <text x="125" y="92" font-size="11" fill="#c8923f">✦</text>
+      <text x="40" y="120" font-size="9" fill="#c8923f" opacity=".7">✦</text>
+    </g>
+  </svg>
+
+  <svg class="corner corner--tr" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.9">
+      <path d="M12 208 Q35 155 68 108 Q100 62 152 18" stroke="#c8923f" stroke-width="1.3"/>
+      <path d="M12 208 Q55 175 95 145" stroke="#c8923f" stroke-width=".9"/>
+      <path d="M12 208 Q45 182 82 164" stroke="#c8923f" stroke-width=".75"/>
+      <path d="M68 108 Q60 90 72 82 Q82 90 68 108Z" stroke="#c8923f" stroke-width=".7" fill="rgba(168,220,196,.55)"/>
+      <path d="M95 145 Q110 130 115 146 Q106 152 95 145Z" stroke="#c8923f" stroke-width=".7" fill="rgba(168,220,196,.55)"/>
+      <circle cx="152" cy="18" r="3.5" fill="#c8923f"/>
+      <circle cx="152" cy="9"  r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="160" cy="15" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="144" cy="15" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="158" cy="25" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="146" cy="25" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="68" cy="108" r="3.5" fill="#6ba8c4"/>
+      <path d="M68 99  Q73 104 68 108 Q63 104 68 99Z"  fill="#95c4dc" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M77 108 Q72 113 68 108 Q72 103 77 108Z" fill="#95c4dc" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M68 117 Q63 113 68 108 Q73 113 68 117Z" fill="#95c4dc" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M59 108 Q64 103 68 108 Q63 113 59 108Z" fill="#95c4dc" stroke="#c8923f" stroke-width=".5"/>
+      <ellipse cx="96" cy="72" rx="5" ry="8" fill="rgba(245,220,138,.75)" stroke="#c8923f" stroke-width=".5" transform="rotate(-28 96 72)"/>
+      <ellipse cx="120" cy="50" rx="4.5" ry="6.5" fill="rgba(245,185,195,.75)" stroke="#c8923f" stroke-width=".5" transform="rotate(-12 120 50)"/>
+      <path d="M80 168 Q88 158 92 170" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <path d="M80 168 Q72 158 68 170" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <circle cx="52" cy="138" r="1.8" fill="#c8923f"/>
+      <circle cx="78" cy="122" r="1.4" fill="#c8923f" opacity=".7"/>
+      <text x="125" y="92" font-size="11" fill="#c8923f">✦</text>
+    </g>
+  </svg>
+
+  <svg class="corner corner--bl" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.9">
+      <path d="M12 208 Q35 155 68 108 Q100 62 152 18" stroke="#c8923f" stroke-width="1.3"/>
+      <path d="M12 208 Q55 175 95 145" stroke="#c8923f" stroke-width=".9"/>
+      <path d="M68 108 Q60 90 72 82 Q82 90 68 108Z" stroke="#c8923f" stroke-width=".7" fill="rgba(168,220,196,.55)"/>
+      <circle cx="152" cy="18" r="3.5" fill="#c8923f"/>
+      <circle cx="152" cy="9"  r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="160" cy="15" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="144" cy="15" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="158" cy="25" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="146" cy="25" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="68" cy="108" r="3.5" fill="#e8c860"/>
+      <path d="M68 99  Q73 104 68 108 Q63 104 68 99Z"  fill="#f5dc8a" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M77 108 Q72 113 68 108 Q72 103 77 108Z" fill="#f5dc8a" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M68 117 Q63 113 68 108 Q73 113 68 117Z" fill="#f5dc8a" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M59 108 Q64 103 68 108 Q63 113 59 108Z" fill="#f5dc8a" stroke="#c8923f" stroke-width=".5"/>
+      <ellipse cx="96" cy="72" rx="5" ry="8" fill="rgba(149,196,220,.7)" stroke="#c8923f" stroke-width=".5" transform="rotate(-28 96 72)"/>
+      <path d="M80 168 Q88 158 92 170" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <path d="M80 168 Q72 158 68 170" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <circle cx="52" cy="138" r="1.8" fill="#c8923f"/>
+      <text x="125" y="92" font-size="11" fill="#c8923f">✦</text>
+    </g>
+  </svg>
+
+  <svg class="corner corner--br" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g opacity="0.9">
+      <path d="M12 208 Q35 155 68 108 Q100 62 152 18" stroke="#c8923f" stroke-width="1.3"/>
+      <path d="M12 208 Q55 175 95 145" stroke="#c8923f" stroke-width=".9"/>
+      <path d="M12 208 Q45 182 82 164" stroke="#c8923f" stroke-width=".75"/>
+      <path d="M68 108 Q60 90 72 82 Q82 90 68 108Z" stroke="#c8923f" stroke-width=".7" fill="rgba(168,220,196,.55)"/>
+      <path d="M95 145 Q110 130 115 146 Q106 152 95 145Z" stroke="#c8923f" stroke-width=".7" fill="rgba(168,220,196,.55)"/>
+      <circle cx="152" cy="18" r="3.5" fill="#c8923f"/>
+      <circle cx="152" cy="9"  r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="160" cy="15" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="144" cy="15" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="158" cy="25" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="146" cy="25" r="5.5" fill="rgba(245,220,138,.5)" stroke="#c8923f" stroke-width="1"/>
+      <circle cx="68" cy="108" r="3.5" fill="#a896d4"/>
+      <path d="M68 99  Q73 104 68 108 Q63 104 68 99Z"  fill="#c9b8e8" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M77 108 Q72 113 68 108 Q72 103 77 108Z" fill="#c9b8e8" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M68 117 Q63 113 68 108 Q73 113 68 117Z" fill="#c9b8e8" stroke="#c8923f" stroke-width=".5"/>
+      <path d="M59 108 Q64 103 68 108 Q63 113 59 108Z" fill="#c9b8e8" stroke="#c8923f" stroke-width=".5"/>
+      <ellipse cx="96" cy="72" rx="5" ry="8" fill="rgba(245,220,138,.75)" stroke="#c8923f" stroke-width=".5" transform="rotate(-28 96 72)"/>
+      <ellipse cx="120" cy="50" rx="4.5" ry="6.5" fill="rgba(149,196,220,.7)" stroke="#c8923f" stroke-width=".5" transform="rotate(-12 120 50)"/>
+      <path d="M80 168 Q88 158 92 170" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <path d="M80 168 Q72 158 68 170" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <path d="M105 130 Q113 120 117 132" stroke="#9bc090" stroke-width="1" fill="none"/>
+      <circle cx="52" cy="138" r="1.8" fill="#c8923f"/>
+      <text x="125" y="92" font-size="11" fill="#c8923f">✦</text>
+    </g>
+  </svg>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#story">Our Story</a>
+    <a href="#party">Wedding Party</a>
+    <a href="#details">Details</a>
+    <a href="#rsvp">RSVP</a>
+    <a href="#registry">Gift Registry</a>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <p class="hero__pre">Together Forever</p>
+    <h1 class="hero__names">
+      Dennisse
+      <span class="hero__ampersand">&</span>
+      JD
+    </h1>
+    <div class="hero__divider">
+      <div class="hero__divider-line"></div>
+      <div class="hero__divider-gem">✦</div>
+      <div class="hero__divider-line"></div>
+    </div>
+    <p class="hero__date">August 1, 2026</p>
+    <p class="hero__location">~ Santuario de San Vicente de Paul Parish ~</p>
+    <div class="hero__scroll">
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ═══ STORY ═══ -->
+  <section id="story">
+    <div class="section-inner fade-in">
+      <p class="section-label">How it all began</p>
+      <h2 class="section-title">Our Story</h2>
+      <p class="section-subtitle">A Once-Upon-a-Time</p>
+      <div class="flourish">
+        <span class="flourish-icon">❀</span>
+      </div>
+      <div class="story-card">
+        <p class="section-body">
+          Some loves bloom quietly, like wildflowers in morning light — unhurried, unhesitating,
+          and entirely their own. <em>Dennisse</em> and <em>JD</em> found each other in the gentle
+          collision of ordinary days, and in that finding, the world grew a little warmer, a little
+          more golden. Their love is rooted in laughter, grounded in kindness, and always reaching
+          upward — like a vine searching for the sky. Today, we celebrate the earth they've built
+          together and the infinite sky that still stretches before them.
+        </p>
+      </div>
+      <div class="story-grid">
+        <div class="story-milestone fade-in">
+          <div class="milestone-icon">🌿</div>
+          <span class="milestone-year">The Beginning</span>
+          <p class="milestone-title">First Meeting</p>
+          <p class="milestone-desc">A chance encounter neither could have planned — and neither would ever change.</p>
+        </div>
+        <div class="story-milestone fade-in">
+          <div class="milestone-icon">🌸</div>
+          <span class="milestone-year">The Journey</span>
+          <p class="milestone-title">Growing Together</p>
+          <p class="milestone-desc">Adventures near and far, quiet evenings, the joy of sharing a life.</p>
+        </div>
+        <div class="story-milestone fade-in">
+          <div class="milestone-icon">✨</div>
+          <span class="milestone-year">Forever</span>
+          <p class="milestone-title">The Proposal</p>
+          <p class="milestone-desc">Under a golden sky, with a heart full of certainty, he asked — and she said yes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WEDDING PARTY ═══ -->
+  <section id="party">
+    <div class="section-inner fade-in">
+      <p class="section-label">The Ones We Love</p>
+      <h2 class="section-title">Wedding Party</h2>
+      <p class="section-subtitle">Our Favorite People</p>
+      <div class="flourish">
+        <span class="flourish-icon">❀</span>
+      </div>
+      <p class="section-body">The dear souls who have walked beside us, cheered for us, and loved us into who we are today.</p>
+
+      <div class="party-columns">
+        <div class="party-side">
+          <p class="party-side-title">Bridesmaids</p>
+          <p class="party-side-sub">Her Garden of Friends</p>
+          <div class="party-member"><div class="party-avatar party-avatar--blush">🌸</div><div><p class="party-member-name">Camila R.</p><p class="party-member-role">Maid of Honor</p></div></div>
+          <div class="party-member"><div class="party-avatar party-avatar--blush">🌷</div><div><p class="party-member-name">Karen J.</p><p class="party-member-role">Bridesmaid</p></div></div>
+          <div class="party-member"><div class="party-avatar party-avatar--blush">🌺</div><div><p class="party-member-name">Isabella T.</p><p class="party-member-role">Bridesmaid</p></div></div>
+          <div class="party-member"><div class="party-avatar party-avatar--blush">🌼</div><div><p class="party-member-name">Valentina C.</p><p class="party-member-role">Bridesmaid</p></div></div>
+        </div>
+        <div class="party-side">
+          <p class="party-side-title">Groomsmen</p>
+          <p class="party-side-sub">His Band of Brothers</p>
+          <div class="party-member"><div class="party-avatar party-avatar--sky">🌿</div><div><p class="party-member-name">Marco A.</p><p class="party-member-role">Best Man</p></div></div>
+          <div class="party-member"><div class="party-avatar party-avatar--sky">🍃</div><div><p class="party-member-name">Diego L.</p><p class="party-member-role">Groomsman</p></div></div>
+          <div class="party-member"><div class="party-avatar party-avatar--sky">🌾</div><div><p class="party-member-name">Andrés V.</p><p class="party-member-role">Groomsman</p></div></div>
+          <div class="party-member"><div class="party-avatar party-avatar--sky">🌱</div><div><p class="party-member-name">Rafael P.</p><p class="party-member-role">Groomsman</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DETAILS ═══ -->
+  <section id="details">
+    <div class="section-inner fade-in">
+      <p class="section-label">The Day Itself</p>
+      <h2 class="section-title">Details</h2>
+      <p class="section-subtitle">Everything You Need to Know</p>
+      <div class="flourish">
+        <span class="flourish-icon">❀</span>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-card fade-in">
+          <div class="detail-icon">🕐</div>
+          <p class="detail-title">Ceremony</p>
+          <div class="detail-divider"></div>
+          <p class="detail-body">
+            <span class="detail-highlight">4:00 in the afternoon</span><br>
+            <em>Doors open at 3:30 PM</em><br><br>
+            Please arrive a few minutes early and settle into the magic before we begin.
+          </p>
+        </div>
+        <div class="detail-card fade-in">
+          <div class="detail-icon">🌿</div>
+          <p class="detail-title">Venue</p>
+          <div class="detail-divider"></div>
+          <p class="detail-body">
+            <span class="detail-highlight">Santuario de San Vicente<br>de Paul Parish</span><br>
+            Quezon City<br><br>
+            <em>More details to come.</em>
+          </p>
+        </div>
+        <div class="detail-card fade-in">
+          <div class="detail-icon">🥂</div>
+          <p class="detail-title">Reception</p>
+          <div class="detail-divider"></div>
+          <p class="detail-body">
+            <span class="detail-highlight">6:00 in the evening</span><br>
+            Cocktail hour following the ceremony.<br><br>
+            <em>Dancing until midnight!</em>
+          </p>
+        </div>
+        <div class="detail-card fade-in">
+          <div class="detail-icon">👗</div>
+          <p class="detail-title">Dress Code</p>
+          <div class="detail-divider"></div>
+          <p class="detail-body">
+            <span class="detail-highlight">Garden Formal</span><br><br>
+            In shades of <em>sage green, dusty blue, blush pink, soft yellow, or gold.</em>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ RSVP ═══ -->
+  <section id="rsvp">
+    <div class="section-inner fade-in">
+      <p class="section-label">Will You Join Us?</p>
+      <h2 class="section-title">RSVP</h2>
+      <p class="section-subtitle">Reply by July 1, 2026</p>
+      <div class="flourish">
+        <span class="flourish-icon">❀</span>
+      </div>
+      <p class="section-body">We can't wait to celebrate with you. Please send us a little note below.</p>
+
+      <form class="rsvp-form" onsubmit="handleRSVP(event)">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Your first name"/></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Your last name"/></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"/></div>
+        <div class="form-row">
+          <div class="form-group"><label>Attending?</label><select><option value="">— Please select —</option><option>Joyfully accepts</option><option>Regretfully declines</option></select></div>
+          <div class="form-group"><label>Number of Guests</label><select><option>1</option><option>2</option></select></div>
+        </div>
+        <div class="form-group"><label>Dietary Restrictions</label><input type="text" placeholder="Any allergies or preferences?"/></div>
+        <div class="form-group"><label>A Note for the Couple</label><textarea placeholder="Share a wish, a memory, or a song request…"></textarea></div>
+        <button type="submit" class="btn-rsvp">Send with Love ✦</button>
+      </form>
+      <p class="rsvp-note" id="rsvp-msg" style="display:none; color:var(--gold-deep); font-size:1.2rem; font-family:'Parisienne',cursive;">
+        ✨ Thank you! Your reply has been received with so much joy ✨
+      </p>
+      <p class="rsvp-note">Questions? Email us at <a href="mailto:hello@dennisseandjd.com">hello@dennisseandjd.com</a></p>
+    </div>
+  </section>
+
+  <!-- ═══ GIFT REGISTRY ═══ -->
+  <section id="registry">
+    <div class="section-inner fade-in">
+      <p class="section-label">A Note from the Couple</p>
+      <h2 class="section-title">Gift Registry</h2>
+      <p class="section-subtitle">With love & gratitude</p>
+      <div class="flourish">
+        <span class="flourish-icon">❀</span>
+      </div>
+      <p class="section-body">
+        Your presence at our wedding is truly the greatest gift of all. However, if you wish
+        to honor us with a token of your love, monetary gifts are warmly appreciated and may
+        be sent in the following ways.
+      </p>
+      <div class="registry-cards">
+        <div class="registry-card">
+          <span class="registry-card-icon">💌</span>
+          <p class="registry-card-name">Cash Gift</p>
+          <p class="registry-card-link">In an envelope</p>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:0.95rem; color:var(--ink-soft); margin-top:0.6rem; line-height:1.6;">
+            A blessing box will be available at the reception for your kind contribution.
+          </p>
+        </div>
+        <div class="registry-card">
+          <span class="registry-card-icon">🏦</span>
+          <p class="registry-card-name">Bank Transfer</p>
+          <p class="registry-card-link">For your convenience</p>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:0.95rem; color:var(--ink-soft); margin-top:0.6rem; line-height:1.6;">
+            Account details will be shared upon request.<br>
+            Please email us at <a href="mailto:hello@dennisseandjd.com" style="color:var(--gold-deep); font-weight:500;">hello@dennisseandjd.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="hero__divider" style="margin:0 auto 2rem;">
+      <div class="hero__divider-line"></div>
+      <div class="hero__divider-gem">✦</div>
+      <div class="hero__divider-line"></div>
+    </div>
+    <p class="footer-names">Dennisse & JD</p>
+    <div class="footer-line"></div>
+    <p class="footer-sub">AUGUST 1, 2026 · TOGETHER FOREVER</p>
+    <p class="footer-quote">
+      "And I'd choose you; in a hundred lifetimes, in a hundred worlds,<br>
+      in any version of reality, I'd find you and I'd choose you."
+      <span class="footer-quote-author">— with all our love ✦</span>
+    </p>
+  </footer>
+
+  <script>
+    // ═══════════════════════════════════════════
+    //  MUSIC PLAYER (YouTube Playlist)
+    // ═══════════════════════════════════════════
+    // 🎵 PLAYLIST CONFIGURATION
+    // To customize: replace the videoIds below with your own YouTube video IDs.
+    // To find a video ID: youtube.com/watch?v=XXXXXXXXXXX  → the part after "v=" is the ID
+    // Songs play in order, then loop back to the first one.
+    const PLAYLIST = [
+      { id: 'wmIGzM0Pi-g', title: 'Enchanted — Taylor Swift' },
+      { id: 'gnQLrcVCrjc', title: 'Lover — Taylor Swift' },
+      { id: 'Wyqj2T7DZE8', title: 'Speak Now — Taylor Swift' },
+      { id: 'd5jcs2GXl3s', title: 'Mine — Taylor Swift' },
+      { id: 'OUe3oVlxLSA', title: 'Daylight — Taylor Swift' }
+    ];
+
+    let ytPlayer = null;
+    let currentTrack = 0;
+    let isPlaying = false;
+    let playerReady = false;
+    let pendingStart = false;
+
+    // Load YouTube IFrame API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('yt-player', {
+        height: '1',
+        width: '1',
+        videoId: PLAYLIST[0].id,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          modestbranding: 1,
+          playsinline: 1,
+          rel: 0
+        },
+        events: {
+          onReady: () => {
+            playerReady = true;
+            if (pendingStart) {
+              pendingStart = false;
+              playCurrent();
+            }
+          },
+          onStateChange: (e) => {
+            // When a song ends (state 0), play the next one
+            if (e.data === YT.PlayerState.ENDED) {
+              currentTrack = (currentTrack + 1) % PLAYLIST.length;
+              playCurrent();
+            }
+            // Sync UI with actual state
+            if (e.data === YT.PlayerState.PLAYING) {
+              isPlaying = true;
+              document.getElementById('musicToggle').textContent = '❚❚';
+              document.getElementById('musicToggle').classList.add('playing');
+            } else if (e.data === YT.PlayerState.PAUSED) {
+              isPlaying = false;
+              document.getElementById('musicToggle').textContent = '♫';
+              document.getElementById('musicToggle').classList.remove('playing');
+            }
+          }
+        }
+      });
+    }
+
+    function playCurrent() {
+      if (!playerReady || !ytPlayer) return;
+      ytPlayer.loadVideoById(PLAYLIST[currentTrack].id);
+      ytPlayer.setVolume(45);
+      document.getElementById('musicTitle').textContent = PLAYLIST[currentTrack].title;
+    }
+
+    function startMusic() {
+      document.getElementById('musicPrompt').style.display = 'none';
+      document.getElementById('musicPlayer').classList.add('active');
+      if (playerReady) {
+        playCurrent();
+      } else {
+        pendingStart = true;
+      }
+    }
+
+    function dismissMusic() {
+      document.getElementById('musicPrompt').style.display = 'none';
+    }
+
+    function toggleMusic() {
+      if (!playerReady || !ytPlayer) return;
+      if (isPlaying) {
+        ytPlayer.pauseVideo();
+      } else {
+        ytPlayer.playVideo();
+      }
+    }
+
+    function closePlayer() {
+      if (ytPlayer && playerReady) ytPlayer.pauseVideo();
+      document.getElementById('musicPlayer').classList.remove('active');
+    }
+
+    // Pastel petals
+    const colors = ['#f5b9c3','#f5dc8a','#95c4dc','#c9b8e8','#a8dcc4','#f0d985','#e8b4d4'];
+    function spawnPetal() {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const size = 7 + Math.random() * 8;
+      p.style.cssText = `left:${Math.random()*100}vw;top:-30px;width:${size}px;height:${size*1.6}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${10+Math.random()*10}s;animation-delay:${Math.random()*3}s;transform:rotate(${Math.random()*360}deg);opacity:0;`;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 23000);
+    }
+    setInterval(spawnPetal, 1300);
+
+    // Falling sparkle stars
+    function spawnStar() {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.textContent = '✦';
+      s.style.cssText = `left:${Math.random()*100}vw;top:-30px;animation-duration:${12+Math.random()*8}s;animation-delay:${Math.random()*2}s;font-size:${10+Math.random()*8}px;color:${Math.random() > 0.5 ? '#c8923f' : '#f0d985'};`;
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 22000);
+    }
+    setInterval(spawnStar, 2400);
+
+    // Static twinkling sparkles around the page
+    function spawnTwinkle() {
+      const t = document.createElement('div');
+      t.className = 'sparkle';
+      t.style.left = Math.random() * 100 + 'vw';
+      t.style.top = Math.random() * 100 + 'vh';
+      t.style.animationDelay = Math.random() * 3 + 's';
+      t.style.animationDuration = (2 + Math.random() * 3) + 's';
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 5000);
+    }
+    setInterval(spawnTwinkle, 800);
+
+    // Scroll fade-in
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+    // RSVP
+    function handleRSVP(e) {
+      e.preventDefault();
+      document.getElementById('rsvp-msg').style.display = 'block';
+      e.target.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
