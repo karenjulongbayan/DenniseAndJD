@@ -750,10 +750,11 @@
     .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    /* ─── Gallery ─── */
+    /* ─── Gallery — Crossfade Slideshow ─── */
     #gallery {
       background: linear-gradient(135deg, rgba(245,185,195,.2) 0%, rgba(201,184,232,.18) 50%, rgba(168,220,196,.2) 100%);
       overflow: hidden;
+      position: relative;
     }
 
     .gallery-intro {
@@ -761,133 +762,709 @@
       font-style: italic;
       font-size: 1.25rem;
       color: var(--ink-soft);
-      max-width: 600px;
-      margin: 0 auto 3.5rem;
+      max-width: 620px;
+      margin: 0 auto 3rem;
       line-height: 1.85;
     }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 2.5rem;
-      max-width: 1000px;
-      margin: 0 auto;
-      perspective: 1200px;
-    }
-
-    .photo-frame {
+    /* Slideshow container */
+    .slideshow {
       position: relative;
-      background: #fff;
-      padding: 1.1rem 1.1rem 3.5rem;
-      border-radius: 6px;
+      max-width: 720px;
+      margin: 0 auto;
+      aspect-ratio: 4 / 3;
+      border-radius: 12px;
+      overflow: hidden;
       box-shadow:
-        0 8px 30px rgba(74,58,44,0.18),
-        0 2px 10px rgba(200,146,63,0.12),
-        inset 0 0 0 1px rgba(200,146,63,0.1);
-      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s;
+        0 20px 60px rgba(74,58,44,0.22),
+        0 6px 20px rgba(200,146,63,0.18);
       cursor: pointer;
-    }
-    .photo-frame:nth-child(1) { transform: rotate(-3deg) translateY(20px); }
-    .photo-frame:nth-child(2) { transform: rotate(1deg); z-index: 2; }
-    .photo-frame:nth-child(3) { transform: rotate(2.5deg) translateY(15px); }
-
-    .photo-frame:hover {
-      transform: rotate(0deg) translateY(-12px) scale(1.04);
-      box-shadow:
-        0 24px 60px rgba(74,58,44,0.28),
-        0 8px 20px rgba(200,146,63,0.2),
-        inset 0 0 0 1px rgba(200,146,63,0.2);
-      z-index: 10;
+      background: #fff;
     }
 
-    .photo-frame::before {
+    /* Decorative gold frame around the slideshow */
+    .slideshow::before {
       content: '';
       position: absolute;
-      top: 8px; right: 8px; bottom: 8px; left: 8px;
-      border: 1px solid rgba(200,146,63,0.18);
-      border-radius: 3px;
+      inset: 10px;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 8px;
       pointer-events: none;
-      z-index: 2;
+      z-index: 3;
     }
 
-    /* Decorative corner sparkles on each frame */
-    .photo-frame::after {
-      content: '✦';
+    /* Sparkle decorations on the corners */
+    .slideshow-sparkle {
       position: absolute;
-      top: -10px; right: -10px;
       color: var(--gold);
-      font-size: 1.4rem;
-      opacity: 0.85;
-      filter: drop-shadow(0 2px 4px rgba(200,146,63,0.3));
+      font-size: 1.5rem;
+      filter: drop-shadow(0 2px 6px rgba(200,146,63,0.4));
       animation: gentleFloat 4s ease-in-out infinite;
+      z-index: 5;
+      pointer-events: none;
     }
-    .photo-frame:nth-child(2)::after { animation-delay: 0.7s; right: auto; left: -10px; top: -8px; }
-    .photo-frame:nth-child(3)::after { animation-delay: 1.4s; right: -12px; top: auto; bottom: 60px; }
+    .slideshow-sparkle--tl { top: -10px; left: -10px; }
+    .slideshow-sparkle--tr { top: -10px; right: -10px; animation-delay: 0.7s; }
+    .slideshow-sparkle--bl { bottom: -10px; left: -10px; animation-delay: 1.4s; }
+    .slideshow-sparkle--br { bottom: -10px; right: -10px; animation-delay: 2.1s; }
 
-    .photo-frame img {
+    /* Individual slides — all stacked, only one visible at a time */
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.4s ease-in-out;
+    }
+    .slide.active { opacity: 1; }
+
+    .slide img {
       display: block;
       width: 100%;
-      height: 380px;
+      height: 100%;
       object-fit: cover;
-      border-radius: 3px;
       filter: saturate(1.05) contrast(1.02);
     }
 
-    /* Polaroid caption */
-    .photo-caption {
+    /* Caption overlay on each slide */
+    .slide-caption {
       position: absolute;
-      bottom: 0.9rem;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 3rem 2rem 1.6rem;
+      background: linear-gradient(to top,
+        rgba(74,58,44,0.9) 0%,
+        rgba(74,58,44,0.6) 50%,
+        transparent 100%);
+      color: #fff;
+      text-align: center;
+      z-index: 2;
+    }
+    .slide-year {
+      font-family: 'Parisienne', cursive;
+      font-size: 2.2rem;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    }
+    .slide-title {
+      font-family: 'Yeseva One', serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+    .slide-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.98rem;
+      color: rgba(255,255,255,0.95);
+      line-height: 1.5;
+      max-width: 480px;
+      margin: 0 auto;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+    }
+
+    /* Progress dots underneath */
+    .slideshow-dots {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 1.5rem auto 0;
+      max-width: 560px;
+    }
+    .slideshow-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(200,146,63,0.28);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.4s ease;
+    }
+    .slideshow-dot:hover { background: rgba(200,146,63,0.55); transform: scale(1.3); }
+    .slideshow-dot.active {
+      background: var(--gold);
+      width: 22px;
+      border-radius: 4px;
+      box-shadow: 0 0 8px rgba(200,146,63,0.5);
+    }
+
+    /* Slide counter */
+    .slideshow-counter {
+      text-align: center;
+      margin-top: 1rem;
+      font-family: 'Parisienne', cursive;
+      font-size: 1.4rem;
+      color: var(--gold-deep);
+      line-height: 1;
+    }
+    .slideshow-counter-sub {
+      display: block;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 500;
+      font-size: 0.62rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-top: 0.4rem;
+    }
+
+    /* Prev/Next arrows */
+    .slideshow-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(200,146,63,0.3);
+      color: var(--ink);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s, background 0.3s, transform 0.3s;
+      z-index: 4;
+    }
+    .slideshow:hover .slideshow-arrow { opacity: 1; }
+    .slideshow-arrow:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.08);
+    }
+    .slideshow-arrow--prev { left: 1rem; }
+    .slideshow-arrow--next { right: 1rem; }
+
+    /* Present-day finale */
+    .timeline-finale {
+      margin-top: 5rem;
+      padding-top: 4rem;
+      position: relative;
+      text-align: center;
+    }
+    .timeline-finale::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-light) 0%, var(--yellow) 50%, transparent 70%);
+      filter: blur(6px);
+      opacity: 0.7;
+    }
+    .timeline-finale-label {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+    .timeline-finale-label::before, .timeline-finale-label::after {
+      content: '✦'; color: var(--gold); margin: 0 0.7em;
+      font-size: 0.9em;
+    }
+    .timeline-finale-title {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(2.4rem, 6vw, 3.5rem);
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.7rem;
+    }
+    .timeline-finale-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      max-width: 580px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+    .finale-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .finale-photo {
+      background: #fff;
+      padding: 1rem 1rem 3rem;
+      border-radius: 5px;
+      box-shadow:
+        0 14px 36px rgba(74,58,44,0.22),
+        0 4px 14px rgba(200,146,63,0.15);
+      cursor: pointer;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s;
+      position: relative;
+    }
+    .finale-photo:nth-child(1) { transform: rotate(-3deg); }
+    .finale-photo:nth-child(2) { transform: rotate(1deg); z-index: 2; }
+    .finale-photo:nth-child(3) { transform: rotate(2.5deg); }
+    .finale-photo:hover {
+      transform: rotate(0deg) translateY(-10px) scale(1.04);
+      box-shadow:
+        0 28px 70px rgba(74,58,44,0.32),
+        0 10px 24px rgba(200,146,63,0.22);
+      z-index: 10;
+    }
+    .finale-photo::before {
+      content: '';
+      position: absolute;
+      top: 8px; right: 8px; bottom: 8px; left: 8px;
+      border: 1px solid rgba(200,146,63,0.2);
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    .finale-photo::after {
+      content: '✦';
+      position: absolute;
+      top: -12px; right: -10px;
+      color: var(--gold);
+      font-size: 1.5rem;
+      animation: gentleFloat 4s ease-in-out infinite;
+      filter: drop-shadow(0 2px 4px rgba(200,146,63,0.3));
+    }
+    .finale-photo:nth-child(2)::after { animation-delay: 0.7s; right: auto; left: -12px; }
+    .finale-photo:nth-child(3)::after { animation-delay: 1.4s; }
+    .finale-photo img {
+      display: block;
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 3px;
+    }
+    .finale-photo .finale-tape {
+      position: absolute;
+      top: -10px; left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      width: 75px; height: 20px;
+      z-index: 3;
+    }
+    .finale-photo:nth-child(1) .finale-tape { background: linear-gradient(180deg, rgba(245,220,138,0.6), rgba(245,220,138,0.75)); }
+    .finale-photo:nth-child(2) .finale-tape { background: linear-gradient(180deg, rgba(245,185,195,0.6), rgba(245,185,195,0.75)); transform: translateX(-50%) rotate(2deg); }
+    .finale-photo:nth-child(3) .finale-tape { background: linear-gradient(180deg, rgba(149,196,220,0.6), rgba(149,196,220,0.75)); transform: translateX(-50%) rotate(-2deg); }
+    .finale-caption {
+      position: absolute;
+      bottom: 0.7rem;
       left: 0; right: 0;
       text-align: center;
       font-family: 'Parisienne', cursive;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       color: var(--ink);
       line-height: 1;
-      letter-spacing: 0.01em;
-    }
-    .photo-caption-sub {
-      display: block;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 0.78rem;
-      color: var(--gold-deep);
-      margin-top: 0.2rem;
-      letter-spacing: 0.05em;
     }
 
-    /* Tape decoration on top of polaroids */
-    .photo-tape {
-      position: absolute;
-      top: -12px; left: 50%;
-      transform: translateX(-50%) rotate(-3deg);
-      width: 80px; height: 22px;
-      background: linear-gradient(180deg,
-        rgba(245,220,138,0.55) 0%,
-        rgba(245,220,138,0.7) 50%,
-        rgba(245,220,138,0.55) 100%);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-      z-index: 3;
-    }
-    .photo-tape::before, .photo-tape::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 8px;
-      background: inherit;
-    }
-    .photo-tape::before { left: -8px; clip-path: polygon(100% 0, 100% 100%, 0 60%, 0 40%); }
-    .photo-tape::after  { right: -8px; clip-path: polygon(0 0, 0 100%, 100% 60%, 100% 40%); }
-
-    .photo-frame:nth-child(2) .photo-tape { transform: translateX(-50%) rotate(2deg); background: linear-gradient(180deg, rgba(245,185,195,0.55), rgba(245,185,195,0.7), rgba(245,185,195,0.55)); }
-    .photo-frame:nth-child(3) .photo-tape { transform: translateX(-50%) rotate(-2deg); background: linear-gradient(180deg, rgba(149,196,220,0.55), rgba(149,196,220,0.7), rgba(149,196,220,0.55)); }
-
-    /* Gallery quote underneath */
+    /* Closing quote */
     .gallery-quote {
-      margin-top: 4rem;
+      margin-top: 4.5rem;
       font-family: 'Parisienne', cursive;
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
       color: var(--gold-deep);
       line-height: 1.4;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.6);
+    }
+    .gallery-quote-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 1.2rem auto 0;
+      width: min(280px, 80vw);
+      color: var(--gold);
+    }
+    .gallery-quote-divider::before, .gallery-quote-divider::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-light), var(--gold));
+    }
+    .gallery-quote-divider::after { background: linear-gradient(to left, transparent, var(--gold-light), var(--gold)); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(74,58,44,0.92);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+      animation: lbFade 0.3s ease both;
+      padding: 2rem;
+    }
+    .lightbox.active { display: flex; }
+    @keyframes lbFade { from { opacity: 0; } to { opacity: 1; } }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 86vh;
+      border-radius: 8px;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+      border: 8px solid #fff;
+      animation: lbZoom 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes lbZoom {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.92);
+      border: none;
+      color: var(--ink);
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .lightbox-close:hover {
+      background: #fff;
+      transform: scale(1.08) rotate(90deg);
+    }
+
+    /* ─── End Gallery ─── */
+
+    /* Present-day finale (kept from before, with refinements) */
+    .timeline-finale {
+      margin-top: 5rem;
+      padding-top: 4rem;
+      position: relative;
+      text-align: center;
+    }
+    .timeline-finale::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-light) 0%, var(--yellow) 50%, transparent 70%);
+      filter: blur(6px);
+      opacity: 0.7;
+    }
+    .timeline-finale-label {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+    .timeline-finale-label::before, .timeline-finale-label::after {
+      content: '✦'; color: var(--gold); margin: 0 0.7em;
+      font-size: 0.9em;
+    }
+    .timeline-finale-title {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(2.4rem, 6vw, 3.5rem);
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.7rem;
+    }
+    .timeline-finale-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      max-width: 580px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+    .finale-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .finale-photo {
+      background: #fff;
+      padding: 1rem 1rem 3rem;
+      border-radius: 5px;
+      box-shadow:
+        0 14px 36px rgba(74,58,44,0.22),
+        0 4px 14px rgba(200,146,63,0.15);
+      cursor: pointer;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s;
+      position: relative;
+    }
+    .finale-photo:nth-child(1) { transform: rotate(-3deg); }
+    .finale-photo:nth-child(2) { transform: rotate(1deg); z-index: 2; }
+    .finale-photo:nth-child(3) { transform: rotate(2.5deg); }
+    .finale-photo:hover {
+      transform: rotate(0deg) translateY(-10px) scale(1.04);
+      box-shadow:
+        0 28px 70px rgba(74,58,44,0.32),
+        0 10px 24px rgba(200,146,63,0.22);
+      z-index: 10;
+    }
+    .finale-photo::before {
+      content: '';
+      position: absolute;
+      top: 8px; right: 8px; bottom: 8px; left: 8px;
+      border: 1px solid rgba(200,146,63,0.2);
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    .finale-photo::after {
+      content: '✦';
+      position: absolute;
+      top: -12px; right: -10px;
+      color: var(--gold);
+      font-size: 1.5rem;
+      animation: gentleFloat 4s ease-in-out infinite;
+      filter: drop-shadow(0 2px 4px rgba(200,146,63,0.3));
+    }
+    .finale-photo:nth-child(2)::after { animation-delay: 0.7s; right: auto; left: -12px; }
+    .finale-photo:nth-child(3)::after { animation-delay: 1.4s; }
+    .finale-photo img {
+      display: block;
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 3px;
+    }
+    .finale-photo .finale-tape {
+      position: absolute;
+      top: -10px; left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      width: 75px; height: 20px;
+      z-index: 3;
+    }
+    .finale-photo:nth-child(1) .finale-tape { background: linear-gradient(180deg, rgba(245,220,138,0.6), rgba(245,220,138,0.75)); }
+    .finale-photo:nth-child(2) .finale-tape { background: linear-gradient(180deg, rgba(245,185,195,0.6), rgba(245,185,195,0.75)); transform: translateX(-50%) rotate(2deg); }
+    .finale-photo:nth-child(3) .finale-tape { background: linear-gradient(180deg, rgba(149,196,220,0.6), rgba(149,196,220,0.75)); transform: translateX(-50%) rotate(-2deg); }
+    .finale-caption {
+      position: absolute;
+      bottom: 0.7rem;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'Parisienne', cursive;
+      font-size: 1.6rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    /* Closing quote */
+    .gallery-quote {
+      margin-top: 4.5rem;
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--gold-deep);
+      line-height: 1.4;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.6);
+    }
+    .gallery-quote-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 1.2rem auto 0;
+      width: min(280px, 80vw);
+      color: var(--gold);
+    }
+    .gallery-quote-divider::before, .gallery-quote-divider::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-light), var(--gold));
+    }
+    .gallery-quote-divider::after { background: linear-gradient(to left, transparent, var(--gold-light), var(--gold)); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(74,58,44,0.92);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+      animation: lbFade 0.3s ease both;
+      padding: 2rem;
+    }
+    .lightbox.active { display: flex; }
+    @keyframes lbFade { from { opacity: 0; } to { opacity: 1; } }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 86vh;
+      border-radius: 8px;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+      border: 8px solid #fff;
+      animation: lbZoom 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes lbZoom {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.92);
+      border: none;
+      color: var(--ink);
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .lightbox-close:hover {
+      background: #fff;
+      transform: scale(1.08) rotate(90deg);
+    }
+
+    /* ─── End Gallery ─── */
+
+    /* Present-day finale photos */
+    .timeline-finale {
+      margin-top: 4rem;
+      padding-top: 4rem;
+      position: relative;
+      text-align: center;
+    }
+    .timeline-finale::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-light) 0%, var(--yellow) 50%, transparent 70%);
+      filter: blur(6px);
+      opacity: 0.7;
+    }
+    .timeline-finale-label {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+    .timeline-finale-label::before, .timeline-finale-label::after {
+      content: '✦'; color: var(--gold); margin: 0 0.7em;
+      font-size: 0.9em;
+    }
+    .timeline-finale-title {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(2.4rem, 6vw, 3.5rem);
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.7rem;
+    }
+    .timeline-finale-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      max-width: 580px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+    .finale-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .finale-photo {
+      background: #fff;
+      padding: 1rem 1rem 3rem;
+      border-radius: 5px;
+      box-shadow:
+        0 14px 36px rgba(74,58,44,0.22),
+        0 4px 14px rgba(200,146,63,0.15);
+      cursor: pointer;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s;
+      position: relative;
+    }
+    .finale-photo:nth-child(1) { transform: rotate(-3deg); }
+    .finale-photo:nth-child(2) { transform: rotate(1deg); z-index: 2; }
+    .finale-photo:nth-child(3) { transform: rotate(2.5deg); }
+    .finale-photo:hover {
+      transform: rotate(0deg) translateY(-10px) scale(1.04);
+      box-shadow:
+        0 28px 70px rgba(74,58,44,0.32),
+        0 10px 24px rgba(200,146,63,0.22);
+      z-index: 10;
+    }
+    .finale-photo::before {
+      content: '';
+      position: absolute;
+      top: 8px; right: 8px; bottom: 8px; left: 8px;
+      border: 1px solid rgba(200,146,63,0.2);
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    .finale-photo::after {
+      content: '✦';
+      position: absolute;
+      top: -12px; right: -10px;
+      color: var(--gold);
+      font-size: 1.5rem;
+      animation: gentleFloat 4s ease-in-out infinite;
+      filter: drop-shadow(0 2px 4px rgba(200,146,63,0.3));
+    }
+    .finale-photo:nth-child(2)::after { animation-delay: 0.7s; right: auto; left: -12px; }
+    .finale-photo:nth-child(3)::after { animation-delay: 1.4s; }
+    .finale-photo img {
+      display: block;
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 3px;
+    }
+    .finale-photo .finale-tape {
+      position: absolute;
+      top: -10px; left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      width: 75px; height: 20px;
+      z-index: 3;
+    }
+    .finale-photo:nth-child(1) .finale-tape { background: linear-gradient(180deg, rgba(245,220,138,0.6), rgba(245,220,138,0.75)); }
+    .finale-photo:nth-child(2) .finale-tape { background: linear-gradient(180deg, rgba(245,185,195,0.6), rgba(245,185,195,0.75)); transform: translateX(-50%) rotate(2deg); }
+    .finale-photo:nth-child(3) .finale-tape { background: linear-gradient(180deg, rgba(149,196,220,0.6), rgba(149,196,220,0.75)); transform: translateX(-50%) rotate(-2deg); }
+    .finale-caption {
+      position: absolute;
+      bottom: 0.7rem;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'Parisienne', cursive;
+      font-size: 1.6rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    /* Closing quote */
+    .gallery-quote {
+      margin-top: 4.5rem;
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--gold-deep);
+      line-height: 1.4;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.6);
     }
     .gallery-quote-divider {
       display: flex;
@@ -967,18 +1544,31 @@
       .rsvp-form { padding: 1.5rem 1.2rem; }
       .story-card { padding: 2.5rem 1.5rem; }
 
-      /* Gallery — single column on mobile */
-      .gallery-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        max-width: 360px;
+      /* Gallery slideshow — mobile adjustments */
+      .slideshow { max-width: 100%; }
+      .slide-caption { padding: 2.5rem 1.2rem 1.2rem; }
+      .slide-year { font-size: 1.7rem; }
+      .slide-title { font-size: 0.85rem; }
+      .slide-text { font-size: 0.88rem; }
+      .slideshow-arrow {
+        opacity: 1;
+        width: 38px; height: 38px;
+        font-size: 1.1rem;
+        background: rgba(255,255,255,0.75);
       }
-      .photo-frame:nth-child(1) { transform: rotate(-2deg); }
-      .photo-frame:nth-child(2) { transform: rotate(1.5deg); }
-      .photo-frame:nth-child(3) { transform: rotate(-1deg); }
-      .photo-frame:hover { transform: rotate(0deg) translateY(-6px) scale(1.02); }
-      .photo-frame img { height: 320px; }
-      .gallery-intro { font-size: 1.1rem; margin-bottom: 2.5rem; }
+      .slideshow-arrow--prev { left: 0.6rem; }
+      .slideshow-arrow--next { right: 0.6rem; }
+      .slideshow-dots { gap: 5px; max-width: 92vw; }
+      .slideshow-dot { width: 6px; height: 6px; }
+      .slideshow-dot.active { width: 18px; }
+
+      .timeline-finale { margin-top: 3rem; padding-top: 2.5rem; }
+      .finale-photos { grid-template-columns: 1fr; gap: 2.5rem; max-width: 320px; }
+      .finale-photo img { height: 280px; }
+      .finale-photo:nth-child(1) { transform: rotate(-2deg); }
+      .finale-photo:nth-child(2) { transform: rotate(1.5deg); }
+      .finale-photo:nth-child(3) { transform: rotate(-1deg); }
+      .gallery-intro { font-size: 1.05rem; margin-bottom: 2.5rem; }
       .story-card::before, .story-card::after { font-size: 7rem; }
       .section-body { font-size: 1.08rem; line-height: 1.75; }
       .hero__pre::before, .hero__pre::after { margin: 0 0.4em; }
@@ -1461,58 +2051,249 @@
           <div class="milestone-icon">🌿</div>
           <span class="milestone-year">The Beginning</span>
           <p class="milestone-title">First Meeting</p>
-          <p class="milestone-desc">A chance encounter neither could have planned — and neither would ever change.</p>
+          <p class="milestone-desc">What started as a simple high school friendship quietly became the beginning of something lifelong — two people growing side by side before they even realized they were becoming part of each other's story.</p>
         </div>
         <div class="story-milestone fade-in">
           <div class="milestone-icon">🌸</div>
           <span class="milestone-year">The Journey</span>
           <p class="milestone-title">Growing Together</p>
-          <p class="milestone-desc">Adventures near and far, quiet evenings, the joy of sharing a life.</p>
+          <p class="milestone-desc">Seasons changed, and time carried them through years of laughter, distance, growth, and rediscovery. Yet somehow, like the moon returning to the tide, they always found their way back to one another.</p>
         </div>
         <div class="story-milestone fade-in">
           <div class="milestone-icon">✨</div>
           <span class="milestone-year">Forever</span>
           <p class="milestone-title">The Proposal</p>
-          <p class="milestone-desc">Under a golden sky, with a heart full of certainty, he asked — and she said yes.</p>
+          <p class="milestone-desc">Like constellations slowly appearing across the night sky, their love revealed itself little by little through the years — until forever no longer felt distant, but written in the stars all along.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ GALLERY ═══ -->
+  <!-- ═══ GALLERY — Crossfade Slideshow ═══ -->
   <section id="gallery">
     <div class="section-inner fade-in">
-      <p class="section-label">Captured Moments</p>
-      <h2 class="section-title">Our Little Gallery</h2>
-      <p class="section-subtitle">Frozen in Time, Held in Heart</p>
+      <p class="section-label">Our Love Story</p>
+      <h2 class="section-title">Through the Years</h2>
+      <p class="section-subtitle">A Story in Photographs</p>
       <div class="flourish">
         <span class="flourish-icon">❀</span>
       </div>
       <p class="gallery-intro">
-        A few of our favorite moments together — small windows into the love we've built,
-        the laughter we've shared, and the journey that brought us here.
+        From a high school Christmas party to today — a gentle walk through the moments
+        that shaped them. Let the photos drift past, or guide them with the arrows.
       </p>
 
-      <div class="gallery-grid">
-        <div class="photo-frame fade-in" onclick="openLightbox('https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/469601707_18481175053020440_4576616582408666373_n.jpg')">
-          <div class="photo-tape"></div>
-          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/469601707_18481175053020440_4576616582408666373_n.jpg" alt="Dennisse and JD" loading="lazy">
-          <p class="photo-caption">Always</p>
-          <span class="photo-caption-sub">— forever yours —</span>
+      <div class="slideshow" id="slideshow" onclick="openLightboxFromSlide()">
+        <span class="slideshow-sparkle slideshow-sparkle--tl">✦</span>
+        <span class="slideshow-sparkle slideshow-sparkle--tr">✦</span>
+        <span class="slideshow-sparkle slideshow-sparkle--bl">✦</span>
+        <span class="slideshow-sparkle slideshow-sparkle--br">✦</span>
+
+        <div class="slide active">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2011%20Christmas%20Party.jpg" alt="2011 Christmas Party" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">2011</p>
+            <p class="slide-title">Where It All Began</p>
+            <p class="slide-text">A high school Christmas party — and the universe quietly began weaving them together.</p>
+          </div>
         </div>
 
-        <div class="photo-frame fade-in" onclick="openLightbox('https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/497542935_10047770668578820_205130324125817314_n.jpg')">
-          <div class="photo-tape"></div>
-          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/497542935_10047770668578820_205130324125817314_n.jpg" alt="Dennisse and JD together" loading="lazy">
-          <p class="photo-caption">Together</p>
-          <span class="photo-caption-sub">— our favorite place —</span>
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2012%20Prom.jpg" alt="2012 Prom" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">2012</p>
+            <p class="slide-title">Prom Night</p>
+            <p class="slide-text">A night to remember — friendship blooming into something more.</p>
+          </div>
         </div>
 
-        <div class="photo-frame fade-in" onclick="openLightbox('https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/482244317_9631956730160218_4708264871507332471_n.jpg')">
-          <div class="photo-tape"></div>
-          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/482244317_9631956730160218_4708264871507332471_n.jpg" alt="Dennisse and JD" loading="lazy">
-          <p class="photo-caption">Forever</p>
-          <span class="photo-caption-sub">— from this day on —</span>
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2018%20JD_s%20Oathtaking.jpg" alt="JD's Oathtaking" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">2018</p>
+            <p class="slide-title">JD's Oathtaking</p>
+            <p class="slide-text">A milestone met. She was there, just as she always would be.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2019%2001%20Tagaytay.jpg" alt="Tagaytay 2019" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Jan 2019</p>
+            <p class="slide-title">Tagaytay</p>
+            <p class="slide-text">Misty mornings, slow coffee, and the easy quiet of being together.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2019%2002%201st%20Valentine_s%20_%20World%20Food%20Expo%20_%20Pasay.jpg" alt="First Valentine's" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Feb 2019</p>
+            <p class="slide-title">Our First Valentine's</p>
+            <p class="slide-text">World Food Expo in Pasay — laughing, eating, falling deeper.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2019%2003%20Mall%20Date.jpg" alt="Mall Date" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Mar 2019</p>
+            <p class="slide-title">Simple Joys</p>
+            <p class="slide-text">Ordinary days made extraordinary by the right person.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2019%200501%20Labor%20Date%20_%20Avengers%20End%20Game%20Movie%20Date.jpg" alt="Avengers Endgame" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">May 2019</p>
+            <p class="slide-title">"I Love You 3000"</p>
+            <p class="slide-text">Avengers Endgame — a movie memory still referenced today.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2019%200505%20Baguio.jpg" alt="Baguio 2019" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">May 2019</p>
+            <p class="slide-title">Up Where Clouds Live</p>
+            <p class="slide-text">Pine trees, cool breeze, and falling more in love with every step.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2019%2007%201st%20Anniv.jpg" alt="First Anniversary" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Jul 2019</p>
+            <p class="slide-title">One Year of Us</p>
+            <p class="slide-text">A year that felt like a lifetime of joy and choosing each other.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2020%2001%20Dessert%20Museum%20(Pre-COVID).jpg" alt="Dessert Museum" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Jan 2020</p>
+            <p class="slide-title">Sweet Beginnings</p>
+            <p class="slide-text">Last carefree days before the world went still.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2020%2002%206AM%20Mass%20as%20Lector.jpg" alt="6AM Mass" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Feb 2020</p>
+            <p class="slide-title">In Quiet Devotion</p>
+            <p class="slide-text">Serving as Lectors — finding God in each other.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2021%2002%203rd%20Valentine_s.jpg" alt="3rd Valentine's" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Feb 2021</p>
+            <p class="slide-title">Love Through It All</p>
+            <p class="slide-text">A pandemic-tested love — bright, steady, unshaken.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2021%2007%203rd%20Anniversary.jpg" alt="3rd Anniversary" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Jul 2021</p>
+            <p class="slide-title">Three Years Strong</p>
+            <p class="slide-text">Another quiet vow whispered to the future.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2022%2004%20Tales%20of%20Illumina.jpg" alt="Tales of Illumina" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Apr 2022</p>
+            <p class="slide-title">Magic in the Glow</p>
+            <p class="slide-text">Tales of Illumina — two characters in their own fairytale.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2022%2006%20Pampanga%20_%20Hot%20Air%20Balloon%20Festival.jpg" alt="Hot Air Balloon Festival" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Jun 2022</p>
+            <p class="slide-title">The Sky Itself</p>
+            <p class="slide-text">Hot Air Balloon Festival — endlessly upward, hand in hand.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2022%2008%20JD_s%2026th%20Bday.jpg" alt="JD's 26th Birthday" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Aug 2022</p>
+            <p class="slide-title">Another Year Around the Sun</p>
+            <p class="slide-text">JD's 26th — another year of him, another year of them.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2023%2001%20Avatar%202%20Movie.jpg" alt="Avatar 2" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Jan 2023</p>
+            <p class="slide-title">"I See You"</p>
+            <p class="slide-text">Avatar: The Way of Water — love is when someone truly sees you.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2023%2004%20Nueva%20Ecija%20_%20Holy%20Week%20.jpg" alt="Nueva Ecija Holy Week" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Apr 2023</p>
+            <p class="slide-title">Holy Week, Holy Love</p>
+            <p class="slide-text">Quiet days of faith and family — home, together.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2023%2008%20Space%20Museum.jpg" alt="Space Museum" loading="lazy">
+          <div class="slide-caption">
+            <p class="slide-year">Aug 2023</p>
+            <p class="slide-title">Written in the Stars</p>
+            <p class="slide-text">The Space Museum — their love story, written here all along.</p>
+          </div>
+        </div>
+
+        <button class="slideshow-arrow slideshow-arrow--prev" onclick="event.stopPropagation(); prevSlide()" title="Previous">‹</button>
+        <button class="slideshow-arrow slideshow-arrow--next" onclick="event.stopPropagation(); nextSlide()" title="Next">›</button>
+      </div>
+
+      <div class="slideshow-dots" id="slideshowDots"></div>
+      <div class="slideshow-counter">
+        <span id="slideCounterText">1 of 19</span>
+        <span class="slideshow-counter-sub">moments</span>
+      </div>
+
+      <!-- Present-day finale -->
+      <div class="timeline-finale">
+        <p class="timeline-finale-label">And Now</p>
+        <h3 class="timeline-finale-title">Here We Are</h3>
+        <p class="timeline-finale-text">
+          From a Christmas party long ago to this very moment — every step, every season,
+          every story has led to here. To them. To us. To forever.
+        </p>
+        <div class="finale-photos">
+          <div class="finale-photo" onclick="openLightbox(this.querySelector('img').src)">
+            <div class="finale-tape"></div>
+            <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/469601707_18481175053020440_4576616582408666373_n.jpg" alt="Dennisse and JD" loading="lazy">
+            <p class="finale-caption">Always</p>
+          </div>
+          <div class="finale-photo" onclick="openLightbox(this.querySelector('img').src)">
+            <div class="finale-tape"></div>
+            <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/497542935_10047770668578820_205130324125817314_n.jpg" alt="Dennisse and JD together" loading="lazy">
+            <p class="finale-caption">Together</p>
+          </div>
+          <div class="finale-photo" onclick="openLightbox(this.querySelector('img').src)">
+            <div class="finale-tape"></div>
+            <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/482244317_9631956730160218_4708264871507332471_n.jpg" alt="Dennisse and JD" loading="lazy">
+            <p class="finale-caption">Forever</p>
+          </div>
         </div>
       </div>
 
@@ -1816,6 +2597,78 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+    // Safety net — force-show any fade-in elements that haven't been revealed after 2s
+    setTimeout(() => {
+      document.querySelectorAll('.fade-in:not(.visible)').forEach(el => el.classList.add('visible'));
+    }, 2000);
+
+    // ═══════════════════════════════════════════
+    //  SLIDESHOW
+    // ═══════════════════════════════════════════
+    const slides = document.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('slideshowDots');
+    const counterText = document.getElementById('slideCounterText');
+    let currentSlide = 0;
+    let slideTimer = null;
+    const SLIDE_DURATION = 5000; // 5 seconds per photo
+
+    // Build the progress dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'slideshow-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      dot.onclick = (e) => { e.stopPropagation(); goToSlide(i); };
+      dotsContainer.appendChild(dot);
+    });
+
+    function updateCounter() {
+      counterText.textContent = `${currentSlide + 1} of ${slides.length}`;
+    }
+
+    function goToSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      dotsContainer.children[currentSlide].classList.remove('active');
+      currentSlide = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      dotsContainer.children[currentSlide].classList.add('active');
+      updateCounter();
+      resetSlideTimer();
+    }
+
+    function nextSlide() { goToSlide(currentSlide + 1); }
+    function prevSlide() { goToSlide(currentSlide - 1); }
+
+    function resetSlideTimer() {
+      clearInterval(slideTimer);
+      slideTimer = setInterval(nextSlide, SLIDE_DURATION);
+    }
+
+    // Click slideshow to open current photo full-size
+    function openLightboxFromSlide() {
+      const src = slides[currentSlide].querySelector('img').src;
+      openLightbox(src);
+    }
+
+    // Pause slideshow when tab is hidden, resume when visible
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearInterval(slideTimer);
+      } else {
+        resetSlideTimer();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      // Only respond if no input/textarea is focused
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowLeft') prevSlide();
+      else if (e.key === 'ArrowRight') nextSlide();
+    });
+
+    // Start the slideshow
+    updateCounter();
+    resetSlideTimer();
 
     // RSVP
     function handleRSVP(e) {
