@@ -468,10 +468,16 @@
     }
     .party-avatar--blush { background: linear-gradient(135deg, #f5b9c3, #f5dc8a); }
     .party-avatar--sky   { background: linear-gradient(135deg, #95c4dc, #c9b8e8); }
+    /* Earth & Sky theme variants */
+    .party-avatar--earth    { background: linear-gradient(135deg, #c8a878, #a87b4a); color: #fff; }
+    .party-avatar--moss     { background: linear-gradient(135deg, #b8c490, #8aa467); color: #fff; }
+    .party-avatar--clay     { background: linear-gradient(135deg, #e0bb8e, #c8923f); color: #fff; }
+    .party-avatar--lavender { background: linear-gradient(135deg, #e0d5f0, #c9b8e8); color: var(--ink); }
+    .party-avatar--mist     { background: linear-gradient(135deg, #d8e8f0, #b8d4e0); color: var(--ink); }
 
     .party-member-name {
       font-family: 'Yeseva One', serif;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--ink);
       line-height: 1.2;
     }
@@ -481,6 +487,161 @@
       font-style: italic;
       color: var(--gold-deep);
     }
+
+    /* Entourage subsection groups */
+    .entourage-group { margin-top: 3.5rem; }
+    .entourage-group-title {
+      font-family: 'Parisienne', cursive;
+      font-size: 2.4rem;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 0.3rem;
+      line-height: 1;
+    }
+    .entourage-group-sub {
+      text-align: center;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 1.6rem;
+    }
+    .entourage-group-sub::before, .entourage-group-sub::after {
+      content: '✦'; color: var(--gold); margin: 0 0.7em; font-size: 0.85em;
+    }
+
+    /* Card wrapping list contents */
+    .entourage-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem 2.2rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 22px rgba(149,196,220,.12);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* Two-column lists (groom side / bride side) */
+    .entourage-pairs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 3rem;
+    }
+    .entourage-pairs > div { text-align: center; }
+    .entourage-pairs-title {
+      font-family: 'Yeseva One', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 0.9rem;
+    }
+    .entourage-pairs-list { list-style: none; padding: 0; }
+    .entourage-pairs-list li {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--ink);
+      padding: 0.35rem 0;
+      line-height: 1.4;
+    }
+    .entourage-pairs-list li.passed {
+      font-style: italic;
+      color: var(--ink-muted);
+    }
+    .entourage-pairs-list li.passed::after {
+      content: ' †';
+      color: var(--gold);
+      font-size: 0.85em;
+      vertical-align: super;
+    }
+
+    /* Color-coded role tag */
+    .role-tag {
+      display: inline-block;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.7rem;
+      border-radius: 50px;
+      margin-bottom: 0.5rem;
+    }
+    .role-tag--earth { background: rgba(168,123,74,0.15); color: #8b6a3c; }
+    .role-tag--sky   { background: rgba(149,196,220,0.25); color: #5b8aa3; }
+
+    /* Highlight (best man / maid of honor) */
+    .entourage-highlight {
+      background: linear-gradient(135deg, rgba(245,220,138,0.35), rgba(245,185,195,0.25));
+      border: 1px solid rgba(200,146,63,0.3);
+      border-radius: 18px;
+      padding: 1.4rem 1.8rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .entourage-highlight .entourage-pairs-title { color: var(--gold-deep); font-size: 0.7rem; }
+    .entourage-highlight-name {
+      font-family: 'Parisienne', cursive;
+      font-size: 2rem;
+      color: var(--ink);
+      line-height: 1;
+      margin-top: 0.2rem;
+    }
+
+    /* Quotable quote card (filler between sections) */
+    .quote-banner {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      position: relative;
+    }
+    .quote-banner-text {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--gold-deep);
+      line-height: 1.5;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.5);
+    }
+    .quote-banner-divider {
+      width: 100px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 1rem auto;
+    }
+    .quote-banner-source {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* Closing love-letter card at end of website */
+    .closing-letter {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--card-strong);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 3.5rem 3rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 14px 50px rgba(200,146,63,0.18);
+      position: relative;
+      text-align: center;
+    }
+    .closing-letter::before, .closing-letter::after {
+      content: '✦';
+      position: absolute;
+      color: var(--gold);
+      font-size: 1.2rem;
+      opacity: 0.7;
+      animation: gentleFloat 4s ease-in-out infinite;
+    }
+    .closing-letter::before { top: 1rem; left: 1.4rem; }
+    .closing-letter::after { bottom: 1rem; right: 1.4rem; animation-delay: 1.5s; }
 
     /* ─── Details ─── */
     #details { background: linear-gradient(135deg, rgba(245,220,138,.22) 0%, rgba(168,220,196,.22) 100%); }
@@ -540,8 +701,69 @@
       margin: 0.2rem 0;
     }
 
+    /* Map link button inside detail cards */
+    .map-link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.55rem 1.3rem;
+      background: linear-gradient(135deg, var(--gold-light), var(--yellow));
+      border: 1px solid rgba(200,146,63,0.4);
+      border-radius: 50px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(200,146,63,0.18);
+    }
+    .map-link:hover {
+      background: linear-gradient(135deg, var(--yellow), var(--blush));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(200,146,63,0.28);
+    }
+
     /* ─── RSVP ─── */
     #rsvp { background: linear-gradient(135deg, rgba(245,185,195,.25) 0%, rgba(245,220,138,.2) 100%); }
+
+    /* Embedded Google Form wrapper */
+    .rsvp-form-wrap {
+      max-width: 560px;
+      margin: 2.5rem auto 0;
+      background: var(--card-strong);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 1.2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 40px rgba(245,185,195,.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .rsvp-form-wrap::before,
+    .rsvp-form-wrap::after {
+      content: '✦';
+      position: absolute;
+      color: var(--gold);
+      font-size: 1.1rem;
+      opacity: 0.7;
+      animation: gentleFloat 4s ease-in-out infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .rsvp-form-wrap::before { top: 0.6rem; left: 0.8rem; }
+    .rsvp-form-wrap::after  { bottom: 0.6rem; right: 0.8rem; animation-delay: 1.5s; }
+
+    .rsvp-form-wrap iframe {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    /* (Keeping old .rsvp-form classes below for backwards compat if needed) */
 
     .rsvp-form {
       max-width: 560px;
@@ -1576,6 +1798,11 @@
       .hero__divider { margin: 1.8rem auto; }
       #hero::after { width: 400px; height: 400px; }
       .party-side { padding: 2rem 1.4rem; }
+      .entourage-pairs { grid-template-columns: 1fr; gap: 2rem; }
+      .entourage-card { padding: 1.5rem 1.2rem; }
+      .entourage-group-title { font-size: 2rem; }
+      .closing-letter { padding: 2.5rem 1.5rem; }
+      .quote-banner { padding: 2rem 1rem; }
       .detail-card { padding: 2.2rem 1.5rem; }
       .registry-card { padding: 2.2rem 1.8rem; min-width: 0; width: 100%; max-width: 320px; }
       .registry-cards { flex-direction: column; align-items: center; gap: 1.2rem; }
@@ -2020,7 +2247,7 @@
       <div class="hero__divider-gem">✦</div>
       <div class="hero__divider-line"></div>
     </div>
-    <p class="hero__date">August 1, 2026</p>
+    <p class="hero__date">Saturday, August 1, 2026 · 12:30 in the Afternoon</p>
     <p class="hero__location">~ Santuario de San Vicente de Paul Parish ~</p>
     <div class="hero__scroll">
       <div class="scroll-arrow"></div>
@@ -2092,9 +2319,9 @@
         <div class="slide active">
           <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2011%20Christmas%20Party.jpg" alt="2011 Christmas Party" loading="lazy">
           <div class="slide-caption">
-            <p class="slide-year">2011</p>
+            <p class="slide-year">December, Years Ago</p>
             <p class="slide-title">Where It All Began</p>
-            <p class="slide-text">A high school Christmas party — and the universe quietly began weaving them together.</p>
+            <p class="slide-text">They were still just kids here — before they even knew what they would become to each other.</p>
           </div>
         </div>
 
@@ -2102,8 +2329,8 @@
           <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2012%20Prom.jpg" alt="2012 Prom" loading="lazy">
           <div class="slide-caption">
             <p class="slide-year">2012</p>
-            <p class="slide-title">Prom Night</p>
-            <p class="slide-text">A night to remember — friendship blooming into something more.</p>
+            <p class="slide-title">First Dance</p>
+            <p class="slide-text">Maybe then, the universe already knew — long before forever came into view.</p>
           </div>
         </div>
 
@@ -2121,7 +2348,7 @@
           <div class="slide-caption">
             <p class="slide-year">Jan 2019</p>
             <p class="slide-title">Tagaytay</p>
-            <p class="slide-text">Misty mornings, slow coffee, and the easy quiet of being together.</p>
+            <p class="slide-text">Under Tagaytay skies — or rather somewhere inside the fog — a young love quietly stepped into shared family and familiar beginnings.</p>
           </div>
         </div>
 
@@ -2183,8 +2410,8 @@
           <img src="https://zgialspkxqjqujlmnhym.supabase.co/storage/v1/object/public/wedding%20photos/2020%2002%206AM%20Mass%20as%20Lector.jpg" alt="6AM Mass" loading="lazy">
           <div class="slide-caption">
             <p class="slide-year">Feb 2020</p>
-            <p class="slide-title">In Quiet Devotion</p>
-            <p class="slide-text">Serving as Lectors — finding God in each other.</p>
+            <p class="slide-title">Sunday Routine</p>
+            <p class="slide-text">JD waiting for Dennisse as she served as a Lector — and somehow it felt like a shared prayer.</p>
           </div>
         </div>
 
@@ -2306,35 +2533,188 @@
     </div>
   </section>
 
-  <!-- ═══ WEDDING PARTY ═══ -->
+  <!-- ═══ WEDDING PARTY / ENTOURAGE ═══ -->
   <section id="party">
     <div class="section-inner fade-in">
       <p class="section-label">The Ones We Love</p>
-      <h2 class="section-title">Wedding Party</h2>
-      <p class="section-subtitle">Our Favorite People</p>
+      <h2 class="section-title">Our Entourage</h2>
+      <p class="section-subtitle">Earth & Sky · Together</p>
       <div class="flourish">
         <span class="flourish-icon">❀</span>
       </div>
-      <p class="section-body">The dear souls who have walked beside us, cheered for us, and loved us into who we are today.</p>
+      <p class="section-body">The dear souls who have walked beside us, prayed for us, and loved us into who we are today.</p>
 
-      <div class="party-columns">
-        <div class="party-side">
-          <p class="party-side-title">Bridesmaids</p>
-          <p class="party-side-sub">Her Garden of Friends</p>
-          <div class="party-member"><div class="party-avatar party-avatar--blush">🌸</div><div><p class="party-member-name">Camila R.</p><p class="party-member-role">Maid of Honor</p></div></div>
-          <div class="party-member"><div class="party-avatar party-avatar--blush">🌷</div><div><p class="party-member-name">Karen J.</p><p class="party-member-role">Bridesmaid</p></div></div>
-          <div class="party-member"><div class="party-avatar party-avatar--blush">🌺</div><div><p class="party-member-name">Isabella T.</p><p class="party-member-role">Bridesmaid</p></div></div>
-          <div class="party-member"><div class="party-avatar party-avatar--blush">🌼</div><div><p class="party-member-name">Valentina C.</p><p class="party-member-role">Bridesmaid</p></div></div>
-        </div>
-        <div class="party-side">
-          <p class="party-side-title">Groomsmen</p>
-          <p class="party-side-sub">His Band of Brothers</p>
-          <div class="party-member"><div class="party-avatar party-avatar--sky">🌿</div><div><p class="party-member-name">Marco A.</p><p class="party-member-role">Best Man</p></div></div>
-          <div class="party-member"><div class="party-avatar party-avatar--sky">🍃</div><div><p class="party-member-name">Diego L.</p><p class="party-member-role">Groomsman</p></div></div>
-          <div class="party-member"><div class="party-avatar party-avatar--sky">🌾</div><div><p class="party-member-name">Andrés V.</p><p class="party-member-role">Groomsman</p></div></div>
-          <div class="party-member"><div class="party-avatar party-avatar--sky">🌱</div><div><p class="party-member-name">Rafael P.</p><p class="party-member-role">Groomsman</p></div></div>
+      <!-- Parents -->
+      <div class="entourage-group">
+        <p class="entourage-group-title">Our Beloved Parents</p>
+        <p class="entourage-group-sub">Where it all began</p>
+        <div class="entourage-card">
+          <div class="entourage-pairs">
+            <div>
+              <p class="entourage-pairs-title"><span class="role-tag role-tag--earth">Groom's Parents</span></p>
+              <ul class="entourage-pairs-list">
+                <li>Arnel Reyes</li>
+                <li>Amorlita Reyes</li>
+              </ul>
+            </div>
+            <div>
+              <p class="entourage-pairs-title"><span class="role-tag role-tag--sky">Bride's Parents</span></p>
+              <ul class="entourage-pairs-list">
+                <li class="passed">Vicente Ferrer</li>
+                <li>Daisy Ferrer</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Principal Sponsors -->
+      <div class="entourage-group">
+        <p class="entourage-group-title">Principal Sponsors</p>
+        <p class="entourage-group-sub">Our guides &amp; guardians</p>
+        <div class="entourage-card">
+          <div class="entourage-pairs">
+            <div>
+              <p class="entourage-pairs-title"><span class="role-tag role-tag--earth">Ninongs</span></p>
+              <ul class="entourage-pairs-list">
+                <li>Armando Bucud</li>
+                <li>Jesus Escosio</li>
+                <li>Carmelito Ferrer</li>
+                <li>Eduardo Gorgon</li>
+                <li>Onofre Reyes, Jr.</li>
+                <li>Roderick Reyes</li>
+              </ul>
+            </div>
+            <div>
+              <p class="entourage-pairs-title"><span class="role-tag role-tag--sky">Ninangs</span></p>
+              <ul class="entourage-pairs-list">
+                <li>Ma. Asuncion Taybon</li>
+                <li>Nova Escosio</li>
+                <li>Rosemarie Palma</li>
+                <li>Eugenia Gorgon</li>
+                <li>Maricel Reyes</li>
+                <li>Eliza Reyes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quote banner -->
+      <div class="quote-banner">
+        <p class="quote-banner-text">"All along there was some invisible string<br>tying you to me."</p>
+        <div class="quote-banner-divider"></div>
+      </div>
+
+      <!-- Best Man / Maid of Honor — featured -->
+      <div class="entourage-group">
+        <p class="entourage-group-title">Best Man &amp; Maid of Honor</p>
+        <p class="entourage-group-sub">Our right hand &amp; left</p>
+        <div class="entourage-pairs" style="max-width: 760px; margin: 0 auto;">
+          <div class="entourage-highlight">
+            <p class="entourage-pairs-title"><span class="role-tag role-tag--earth">Best Man</span></p>
+            <p class="entourage-highlight-name">Christian Reyes</p>
+          </div>
+          <div class="entourage-highlight">
+            <p class="entourage-pairs-title"><span class="role-tag role-tag--sky">Maid of Honor</span></p>
+            <p class="entourage-highlight-name">Addie Ferrer</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Groomsmen / Bridesmaids -->
+      <div class="entourage-group">
+        <p class="entourage-group-title">Groomsmen &amp; Bridesmaids</p>
+        <p class="entourage-group-sub">The dearest of friends</p>
+        <div class="entourage-card">
+          <div class="entourage-pairs">
+            <div>
+              <p class="entourage-pairs-title"><span class="role-tag role-tag--earth">Groomsmen</span></p>
+              <ul class="entourage-pairs-list">
+                <li>Argem Bucud</li>
+                <li>Aldrin Padilla</li>
+                <li>John Benedict Reyes</li>
+              </ul>
+            </div>
+            <div>
+              <p class="entourage-pairs-title"><span class="role-tag role-tag--sky">Bridesmaids</span></p>
+              <ul class="entourage-pairs-list">
+                <li>Jaica Domingo</li>
+                <li>Abigail Recto</li>
+                <li>Jennelyn Reyes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Sponsors -->
+      <div class="entourage-group">
+        <p class="entourage-group-title">Secondary Sponsors</p>
+        <p class="entourage-group-sub">Bearers of light &amp; love</p>
+        <div class="entourage-card">
+          <div class="entourage-pairs" style="gap: 1.8rem 3rem;">
+            <div>
+              <p class="entourage-pairs-title">Veil Sponsors</p>
+              <ul class="entourage-pairs-list">
+                <li>Ivan Escosio</li>
+                <li>Mia Micaila Reyes</li>
+              </ul>
+            </div>
+            <div>
+              <p class="entourage-pairs-title">Candle Sponsors</p>
+              <ul class="entourage-pairs-list">
+                <li>Jasper Cabornay</li>
+                <li>Ma. Karen Julongbayan</li>
+              </ul>
+            </div>
+            <div>
+              <p class="entourage-pairs-title">Cord Sponsors</p>
+              <ul class="entourage-pairs-list">
+                <li>Loyd Bucud</li>
+                <li>Maica Escosio</li>
+              </ul>
+            </div>
+            <div>
+              <p class="entourage-pairs-title">Bible Bearer</p>
+              <ul class="entourage-pairs-list">
+                <li>Jymyl Annulpa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bearers & Flower Girls -->
+      <div class="entourage-group">
+        <p class="entourage-group-title">Little Hearts</p>
+        <p class="entourage-group-sub">Bearers &amp; flower girls</p>
+        <div class="entourage-card">
+          <div class="entourage-pairs" style="gap: 1.8rem 3rem;">
+            <div>
+              <p class="entourage-pairs-title">Ring Bearer</p>
+              <ul class="entourage-pairs-list">
+                <li>Baron Matteo Cabornay</li>
+              </ul>
+            </div>
+            <div>
+              <p class="entourage-pairs-title">Coin Bearer</p>
+              <ul class="entourage-pairs-list">
+                <li>Alonzo Cruz</li>
+              </ul>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <p class="entourage-pairs-title">Flower Girls</p>
+              <ul class="entourage-pairs-list">
+                <li>Irish Camano</li>
+                <li>Akira Canaman</li>
+                <li>Vervorie Cruzat</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -2354,29 +2734,34 @@
           <p class="detail-title">Ceremony</p>
           <div class="detail-divider"></div>
           <p class="detail-body">
-            <span class="detail-highlight">4:00 in the afternoon</span><br>
-            <em>Doors open at 3:30 PM</em><br><br>
-            Please arrive a few minutes early and settle into the magic before we begin.
+            <span class="detail-highlight">12:30 in the Afternoon</span><br>
+            Saturday, August 1, 2026<br><br>
+            Please arrive a little early to settle in before we say "I do."
           </p>
         </div>
         <div class="detail-card fade-in">
-          <div class="detail-icon">🌿</div>
+          <div class="detail-icon">⛪</div>
           <p class="detail-title">Venue</p>
           <div class="detail-divider"></div>
           <p class="detail-body">
             <span class="detail-highlight">Santuario de San Vicente<br>de Paul Parish</span><br>
-            Quezon City<br><br>
-            <em>More details to come.</em>
+            Tandang Sora Avenue<br>
+            Quezon City
           </p>
+          <a href="https://www.google.com/maps/search/?api=1&query=Santuario+de+San+Vicente+de+Paul+Parish+Tandang+Sora+Quezon+City"
+             target="_blank" rel="noopener" class="map-link">
+            📍 View on Google Maps
+          </a>
         </div>
         <div class="detail-card fade-in">
           <div class="detail-icon">🥂</div>
           <p class="detail-title">Reception</p>
           <div class="detail-divider"></div>
           <p class="detail-body">
-            <span class="detail-highlight">6:00 in the evening</span><br>
-            Cocktail hour following the ceremony.<br><br>
-            <em>Dancing until midnight!</em>
+            <span class="detail-highlight">3:00 PM – 7:00 PM</span><br>
+            <em>Bulwagang San Vicente</em><br>
+            (located behind the Church)<br><br>
+            Dinner, dancing, and a whole lot of joy.
           </p>
         </div>
         <div class="detail-card fade-in">
@@ -2384,8 +2769,9 @@
           <p class="detail-title">Dress Code</p>
           <div class="detail-divider"></div>
           <p class="detail-body">
-            <span class="detail-highlight">Garden Formal</span><br><br>
-            In shades of <em>sage green, dusty blue, blush pink, soft yellow, or gold.</em>
+            <span class="detail-highlight">Semi-Formal · Earth Tones</span><br><br>
+            Please come in shades of<br>
+            <em>beige, tan, champagne, or brown.</em>
           </p>
         </div>
       </div>
@@ -2401,26 +2787,24 @@
       <div class="flourish">
         <span class="flourish-icon">❀</span>
       </div>
-      <p class="section-body">We can't wait to celebrate with you. Please send us a little note below.</p>
+      <p class="section-body">We can't wait to celebrate with you. Please fill out the form below.</p>
 
-      <form class="rsvp-form" onsubmit="handleRSVP(event)">
-        <div class="form-row">
-          <div class="form-group"><label>First Name</label><input type="text" placeholder="Your first name"/></div>
-          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Your last name"/></div>
-        </div>
-        <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"/></div>
-        <div class="form-row">
-          <div class="form-group"><label>Attending?</label><select><option value="">— Please select —</option><option>Joyfully accepts</option><option>Regretfully declines</option></select></div>
-          <div class="form-group"><label>Number of Guests</label><select><option>1</option><option>2</option></select></div>
-        </div>
-        <div class="form-group"><label>Dietary Restrictions</label><input type="text" placeholder="Any allergies or preferences?"/></div>
-        <div class="form-group"><label>A Note for the Couple</label><textarea placeholder="Share a wish, a memory, or a song request…"></textarea></div>
-        <button type="submit" class="btn-rsvp">Send with Love ✦</button>
-      </form>
-      <p class="rsvp-note" id="rsvp-msg" style="display:none; color:var(--gold-deep); font-size:1.2rem; font-family:'Parisienne',cursive;">
-        ✨ Thank you! Your reply has been received with so much joy ✨
+      <div class="rsvp-form-wrap">
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSfWCASo59rWk-rYBeR5eUnCotVFgPnpktadB0VbEjBvsdWs5A/viewform?embedded=true"
+          width="100%"
+          height="550"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          title="Wedding RSVP Form">
+          Loading…
+        </iframe>
+      </div>
+
+      <p class="rsvp-note" style="margin-top: 1.5rem;">
+        Having trouble? <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWCASo59rWk-rYBeR5eUnCotVFgPnpktadB0VbEjBvsdWs5A/viewform" target="_blank" rel="noopener" style="color: var(--gold-deep); font-weight: 500;">Open the form in a new tab</a>
       </p>
-      <p class="rsvp-note">Questions? Email us at <a href="mailto:hello@dennisseandjd.com">hello@dennisseandjd.com</a></p>
     </div>
   </section>
 
@@ -2453,7 +2837,43 @@
           <p class="registry-card-link">For your convenience</p>
           <p style="font-family:'Cormorant Garamond',serif; font-size:0.95rem; color:var(--ink-soft); margin-top:0.6rem; line-height:1.6;">
             Account details will be shared upon request.<br>
-            Please email us at <a href="mailto:hello@dennisseandjd.com" style="color:var(--gold-deep); font-weight:500;">hello@dennisseandjd.com</a>
+            Please email us at <a href="mailto:jden.wedding@gmail.com" style="color:var(--gold-deep); font-weight:500;">jden.wedding@gmail.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CLOSING LOVE LETTER ═══ -->
+  <section id="closing" style="background: linear-gradient(135deg, rgba(245,220,138,.15) 0%, rgba(245,185,195,.18) 100%);">
+    <div class="section-inner fade-in">
+      <p class="section-label">A Note for You</p>
+      <h2 class="section-title">With Love</h2>
+      <div class="flourish">
+        <span class="flourish-icon">❀</span>
+      </div>
+      <div class="closing-letter">
+        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.2rem; color:var(--ink-soft); line-height:1.85; margin-bottom:1.5rem;">
+          To every dear soul who has loved us, prayed for us, walked beside us through every season —
+          thank you for being part of our story. Your presence on our day means everything to us.
+        </p>
+        <p style="font-family:'Parisienne',cursive; font-size:clamp(1.6rem, 4vw, 2.4rem); color:var(--gold-deep); line-height:1.5; margin: 1.5rem 0 1rem;">
+          "And all at once, you are the one<br>I have been waiting for."
+        </p>
+        <div class="quote-banner-divider" style="margin: 1rem auto 1.5rem;"></div>
+        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:var(--ink-soft); line-height:1.75;">
+          "The best love is the kind that awakens the soul and makes us reach for more,
+          that plants a fire in our hearts and brings peace to our minds."
+        </p>
+        <p style="font-family:'Quicksand',sans-serif; font-size:0.65rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-deep); margin-top:0.8rem;">
+          — The Notebook
+        </p>
+        <div style="margin-top: 2.2rem;">
+          <p style="font-family:'Parisienne',cursive; font-size:2.4rem; color:var(--ink); line-height:1;">
+            Dennisse &amp; JD
+          </p>
+          <p style="font-family:'Quicksand',sans-serif; font-size:0.6rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-deep); margin-top:0.5rem;">
+            August 1, 2026
           </p>
         </div>
       </div>
@@ -2471,8 +2891,8 @@
     <div class="footer-line"></div>
     <p class="footer-sub">AUGUST 1, 2026 · TOGETHER FOREVER</p>
     <p class="footer-quote">
-      "And I'd choose you; in a hundred lifetimes, in a hundred worlds,<br>
-      in any version of reality, I'd find you and I'd choose you."
+      "Of all the chapters we'll write together,<br>
+      this one — with you — will always be our favorite."
       <span class="footer-quote-author">— with all our love ✦</span>
     </p>
   </footer>
@@ -2669,13 +3089,6 @@
     // Start the slideshow
     updateCounter();
     resetSlideTimer();
-
-    // RSVP
-    function handleRSVP(e) {
-      e.preventDefault();
-      document.getElementById('rsvp-msg').style.display = 'block';
-      e.target.style.display = 'none';
-    }
   </script>
 </body>
 </html>
